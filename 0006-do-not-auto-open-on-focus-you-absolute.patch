@@ -1,0 +1,37 @@
+From 7f1070545fde0bc6a6d505a6e02feaa717b840ea Mon Sep 17 00:00:00 2001
+From: Meriipu <Meriipu@users.noreply.github.com>
+Date: Tue, 14 Jul 2020 06:08:02 +0200
+Subject: [PATCH 6/6] do not auto-open on focus you absolute
+
+thanks
+---
+ browser/components/urlbar/UrlbarInput.jsm | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/browser/components/urlbar/UrlbarInput.jsm b/browser/components/urlbar/UrlbarInput.jsm
+index 5cb137c396bd..85da7ce150a5 100644
+--- a/browser/components/urlbar/UrlbarInput.jsm
++++ b/browser/components/urlbar/UrlbarInput.jsm
+@@ -2098,7 +2098,8 @@ class UrlbarInput {
+     this.startLayoutExtend();
+ 
+     if (this.focusedViaMousedown) {
+-      this.view.autoOpen({ event });
++      console.log("[UrlbarInput autoOpen focusedViaMousedown] haha no thanks");
++      //this.view.autoOpen({ event });
+     } else if (this.inputField.hasAttribute("refocused-by-panel")) {
+       this._maybeSelectAll(true); // not sure what true here does
+     }
+@@ -2159,7 +2160,8 @@ class UrlbarInput {
+           this._preventClickSelectsAll = true;
+           this.search(UrlbarTokenizer.RESTRICT.SEARCH);
+         } else {
+-          this.view.autoOpen({ event });
++          console.log("[UrlbarInput autoOpen] haha no thanks");
++          //this.view.autoOpen({ event });
+         }
+         break;
+       case this.dropmarker:
+-- 
+2.27.0
+

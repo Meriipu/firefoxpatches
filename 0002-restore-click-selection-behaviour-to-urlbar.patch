@@ -1,0 +1,67 @@
+From 8bfbaca72f4bdd5bf1310cba783e3b59fc35da77 Mon Sep 17 00:00:00 2001
+From: Meriipu <Meriipu@users.noreply.github.com>
+Date: Sat, 11 Jul 2020 22:01:18 +0200
+Subject: [PATCH 2/6] restore click-selection behaviour to urlbar
+
+* doubleclicking selects all
+* singleclicking selects nothing
+---
+ browser/components/urlbar/UrlbarInput.jsm | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
+
+diff --git a/browser/components/urlbar/UrlbarInput.jsm b/browser/components/urlbar/UrlbarInput.jsm
+index 2f520f35cba6..b9fab02f8926 100644
+--- a/browser/components/urlbar/UrlbarInput.jsm
++++ b/browser/components/urlbar/UrlbarInput.jsm
+@@ -1966,14 +1966,16 @@ class UrlbarInput {
+    * Determines if we should select all the text in the Urlbar based on the
+    *  Urlbar state, and whether the selection is empty.
+    */
+-  _maybeSelectAll() {
++  _maybeSelectAll(ignoreClickSelectsAllPref = false) {
+     if (
+       !this._preventClickSelectsAll &&
++      ignoreClickSelectsAllPref &&
+       this._compositionState != UrlbarUtils.COMPOSITION.COMPOSING &&
+       this.document.activeElement == this.inputField &&
+       this.inputField.selectionStart == this.inputField.selectionEnd
+     ) {
+-      this.select();
++      //this.select();
++      this.editor.selectAll();
+     }
+   }
+ 
+@@ -2062,7 +2064,7 @@ class UrlbarInput {
+       return;
+     }
+ 
+-    this._maybeSelectAll();
++    this._maybeSelectAll(/* ignoreClickSelectsAllPref */ event.button == 2);
+   }
+ 
+   _on_focus(event) {
+@@ -2095,7 +2097,7 @@ class UrlbarInput {
+     if (this.focusedViaMousedown) {
+       this.view.autoOpen({ event });
+     } else if (this.inputField.hasAttribute("refocused-by-panel")) {
+-      this._maybeSelectAll();
++      this._maybeSelectAll(true); // not sure what true here does
+     }
+ 
+     this._updateUrlTooltip();
+@@ -2147,7 +2149,10 @@ class UrlbarInput {
+           this.selectionStart = this.selectionEnd = 0;
+         }
+ 
+-        if (event.target.id == SEARCH_BUTTON_ID) {
++        if (event.detail == 2) { // double click selects all
++          this.editor.selectAll();
++          event.preventDefault();
++        } else if (event.target.id == SEARCH_BUTTON_ID) {
+           this._preventClickSelectsAll = true;
+           this.search(UrlbarTokenizer.RESTRICT.SEARCH);
+         } else {
+-- 
+2.27.0
+

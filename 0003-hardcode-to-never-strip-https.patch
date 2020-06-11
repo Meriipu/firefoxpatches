@@ -1,0 +1,43 @@
+From bbfa2c1b955a3fd77977a2b35915d9507f9fe963 Mon Sep 17 00:00:00 2001
+From: Meriipu <Meriipu@users.noreply.github.com>
+Date: Sat, 11 Jul 2020 22:01:52 +0200
+Subject: [PATCH 3/6] hardcode to never strip https
+
+---
+ browser/components/urlbar/UrlbarResult.jsm | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
+
+diff --git a/browser/components/urlbar/UrlbarResult.jsm b/browser/components/urlbar/UrlbarResult.jsm
+index 58a0ece6ec25..453fa021808d 100644
+--- a/browser/components/urlbar/UrlbarResult.jsm
++++ b/browser/components/urlbar/UrlbarResult.jsm
+@@ -227,13 +227,21 @@ class UrlbarResult {
+       // For display purposes we need to unescape the url.
+       payloadInfo.displayUrl = [...payloadInfo.url];
+       let url = payloadInfo.displayUrl[0];
++      // TRASHBAR: This chunk of code trims urls. Restore behaviour to before
++      // the pref. stripHttps was removed, but hardcode every instance of the
++      // pref to false (do not strip https no matter what). The trimUrl option
++      // still exists in 77.0.1, so for now this can stay.
+       if (url && UrlbarPrefs.get("trimURLs")) {
+-        url = BrowserUtils.removeSingleTrailingSlashFromURL(url);
+-        if (url.startsWith("https://")) {
+-          url = url.substring(8);
+-          if (url.startsWith("www.")) {
+-            url = url.substring(4);
++        if (false) { // TRASHBAR: if (update1.view.stripHttps) -- hardcode pref to false
++          url = BrowserUtils.removeSingleTrailingSlashFromURL(url);
++          if (url.startsWith("https://")) {
++            url = url.substring(8);
++            if (url.startsWith("www.")) {
++              url = url.substring(4);
++            }
+           }
++        } else {
++          url = BrowserUtils.trimURL(url);
+         }
+       }
+       payloadInfo.displayUrl[0] = Services.textToSubURI.unEscapeURIForUI(url);
+-- 
+2.27.0
+
