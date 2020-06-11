@@ -1,0 +1,172 @@
+From f2f9a3c98abc41eefca57bfc52fd5caa4297d6db Mon Sep 17 00:00:00 2001
+From: Meriipu <Meriipu@users.noreply.github.com>
+Date: Mon, 13 Jul 2020 00:01:11 +0200
+Subject: [PATCH 4/6] revert the removal of the dropmarker et al.
+
+as of 78 this alone is not enough to have the dropmarker be functional
+some additional patches to fix autoOpen on focus/select as well as
+avoiding one of the providers is necessary.
+---
+ browser/base/content/browser.css              |  1 +
+ browser/base/content/browser.xhtml            |  6 ++++-
+ browser/components/urlbar/UrlbarInput.jsm     | 19 +++++++++++++++
+ browser/components/urlbar/UrlbarView.jsm      |  2 ++
+ .../locales/en-US/chrome/browser/browser.dtd  |  6 +++++
+ .../themes/shared/urlbar-searchbar.inc.css    | 24 +++++++++++++++++++
+ 6 files changed, 57 insertions(+), 1 deletion(-)
+
+diff --git a/browser/base/content/browser.css b/browser/base/content/browser.css
+index 808c03e88223..9df90a899796 100644
+--- a/browser/base/content/browser.css
++++ b/browser/base/content/browser.css
+@@ -702,6 +702,7 @@ toolbar:not(#TabsToolbar) > #personal-bookmarks {
+ #urlbar-input-container[pageproxystate=invalid] > #page-action-buttons > .urlbar-page-action,
+ #identity-box.chromeUI ~ #page-action-buttons > .urlbar-page-action:not(#star-button-box),
+ #urlbar[usertyping] > #urlbar-input-container > #page-action-buttons > #urlbar-zoom-button,
++#urlbar[usertyping] > #urlbar-input-container > .urlbar-history-dropmarker,
+ #urlbar:not([usertyping]) > #urlbar-input-container > #urlbar-go-button,
+ #urlbar:not([focused]) > #urlbar-input-container > #urlbar-go-button {
+   display: none;
+diff --git a/browser/base/content/browser.xhtml b/browser/base/content/browser.xhtml
+index d8bb5aca778f..93d785978583 100644
+--- a/browser/base/content/browser.xhtml
++++ b/browser/base/content/browser.xhtml
+@@ -1037,7 +1037,11 @@
+               <image id="urlbar-go-button"
+                      class="urlbar-icon"
+                      onclick="gURLBar.handleCommand(event);"
+-                     data-l10n-id="urlbar-go-button"/>
++                     data-l10n-id="urlbar-go-button"
++                     tooltiptext="&goEndCap.tooltip;"/>
++              <image class="urlbar-history-dropmarker urlbar-icon chromeclass-toolbar-additional"
++                     hidden="false"
++                     tooltiptext="&urlbar.openHistoryPopup.tooltip;"/>
+               <hbox id="page-action-buttons" context="pageActionContextMenu">
+                 <toolbartabstop/>
+                 <hbox id="contextual-feature-recommendation" role="button" hidden="true">
+diff --git a/browser/components/urlbar/UrlbarInput.jsm b/browser/components/urlbar/UrlbarInput.jsm
+index b9fab02f8926..5cb137c396bd 100644
+--- a/browser/components/urlbar/UrlbarInput.jsm
++++ b/browser/components/urlbar/UrlbarInput.jsm
+@@ -151,6 +151,8 @@ class UrlbarInput {
+     }
+ 
+     this.inputField = this.querySelector("#urlbar-input");
++    this.dropmarker = this.querySelector(".urlbar-history-dropmarker");
++    this.dropmarker.hidden = false;
+     this._inputContainer = this.querySelector("#urlbar-input-container");
+     this._identityBox = this.querySelector("#identity-box");
+     this._toolbar = this.textbox.closest("toolbar");
+@@ -195,6 +197,7 @@ class UrlbarInput {
+       this.addEventListener(name, this);
+     }
+ 
++    this.dropmarker.addEventListener("mousedown", this);
+     this.window.addEventListener("mousedown", this);
+     this.textbox.addEventListener("mousedown", this);
+     this._inputContainer.addEventListener("click", this);
+@@ -2159,6 +2162,22 @@ class UrlbarInput {
+           this.view.autoOpen({ event });
+         }
+         break;
++      case this.dropmarker:
++        if (event.button != 0) {
++          break;
++        }
++
++        if (this.view.isOpen) {
++          this.view.close();
++        } else {
++          this.focus();
++          this.startQuery({
++            allowAutofill: false,
++            event,
++          });
++          this._maybeSelectAll();
++        }
++        break;
+       case this.window:
+         if (this._mousedownOnUrlbarDescendant) {
+           this._mousedownOnUrlbarDescendant = false;
+diff --git a/browser/components/urlbar/UrlbarView.jsm b/browser/components/urlbar/UrlbarView.jsm
+index ed664f5afb5c..af0f69e9e242 100644
+--- a/browser/components/urlbar/UrlbarView.jsm
++++ b/browser/components/urlbar/UrlbarView.jsm
+@@ -354,6 +354,7 @@ class UrlbarView {
+ 
+     this.removeAccessibleFocus();
+     this.input.inputField.setAttribute("aria-expanded", "false");
++    this.input.dropmarker.removeAttribute("open");
+ 
+     this.input.removeAttribute("open");
+     this.input.endLayoutExtend();
+@@ -608,6 +609,7 @@ class UrlbarView {
+     this._enableOrDisableRowWrap();
+ 
+     this.input.inputField.setAttribute("aria-expanded", "true");
++    this.input.dropmarker.setAttribute("open", "true");
+ 
+     this.input.setAttribute("open", "true");
+     this.input.startLayoutExtend();
+diff --git a/browser/locales/en-US/chrome/browser/browser.dtd b/browser/locales/en-US/chrome/browser/browser.dtd
+index f6120ac9d0a1..de772bafe899 100644
+--- a/browser/locales/en-US/chrome/browser/browser.dtd
++++ b/browser/locales/en-US/chrome/browser/browser.dtd
+@@ -96,6 +96,12 @@ this container is a toolbar. This avoids double-speaking. -->
+ <!ENTITY printButton.label            "Print">
+ <!ENTITY printButton.tooltip          "Print this page">
+ 
++<!ENTITY urlbar.remoteControlNotificationAnchor.tooltip   "Browser is under remote control">
++
++<!ENTITY urlbar.permissionsGranted.tooltip       "You have granted this website additional permissions.">
++
++<!ENTITY urlbar.openHistoryPopup.tooltip                "Show history">
++
+ <!ENTITY searchItem.title             "Search">
+ 
+ <!-- Toolbar items -->
+diff --git a/browser/themes/shared/urlbar-searchbar.inc.css b/browser/themes/shared/urlbar-searchbar.inc.css
+index 0b1f69342995..99137e29ba02 100644
+--- a/browser/themes/shared/urlbar-searchbar.inc.css
++++ b/browser/themes/shared/urlbar-searchbar.inc.css
+@@ -483,6 +483,19 @@
+   transform: scaleX(-1);
+ }
+ 
++.urlbar-history-dropmarker {
++  list-style-image: url(chrome://global/skin/icons/arrow-dropdown-16.svg);
++  transition: opacity 0.15s ease;
++}
++
++#urlbar[switchingtabs] > #urlbar-input-container > .urlbar-history-dropmarker {
++  transition: none;
++}
++
++#nav-bar:not([customizing="true"]) > #nav-bar-customization-target > #urlbar-container:not(:hover) > #urlbar:not([focused]) > #urlbar-input-container > .urlbar-history-dropmarker {
++  opacity: 0;
++}
++
+ #pageActionButton,
+ .share-more-button {
+   list-style-image: url("chrome://global/skin/icons/more.svg");
+@@ -680,6 +693,17 @@
+   mask-position-x: 0;
+ }
+ 
++/* Translate the dropmarker to give illusion of increasing width of the recommendation  */
++#urlbar[cfr-recommendation-state] .urlbar-history-dropmarker {
++  transition: transform ease-in-out var(--cfr-animation-duration);
++}
++#urlbar[cfr-recommendation-state="expanded"] .urlbar-history-dropmarker {
++  transform: translateX(calc(var(--cfr-label-width) * -1));
++}
++#urlbar[cfr-recommendation-state="expanded"] .urlbar-history-dropmarker:-moz-locale-dir(rtl) {
++  transform: translateX(calc(var(--cfr-label-width)));
++}
++
+ /* Shift the url-bar text fading to stop the recommendation overlapping */
+ #urlbar[cfr-recommendation-state] #urlbar-input {
+   /* A mask-image is usually only defined for the url bar when text overflows.
+-- 
+2.27.0
+

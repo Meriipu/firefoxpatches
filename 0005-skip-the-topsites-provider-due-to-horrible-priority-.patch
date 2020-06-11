@@ -1,0 +1,37 @@
+From 900fc255c8123dbea97c6f37154f2fc46908ff88 Mon Sep 17 00:00:00 2001
+From: Meriipu <Meriipu@users.noreply.github.com>
+Date: Tue, 14 Jul 2020 04:38:21 +0200
+Subject: [PATCH 5/6] skip the topsites provider due to horrible
+ priority-stealing behaviour
+
+even though history was getting sent to the query this provider seems
+to somehow have dropped it and returned NOTHING because topsites are
+disabled in my setup, leading to the dropmarker doing absolutely
+nothing.
+
+With the topsites provider removed, firefox is forced to use the
+history one or whatever it is called.
+---
+ browser/components/urlbar/UrlbarProvidersManager.jsm | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/browser/components/urlbar/UrlbarProvidersManager.jsm b/browser/components/urlbar/UrlbarProvidersManager.jsm
+index 9d9e547897d3..b6a851c0f78a 100644
+--- a/browser/components/urlbar/UrlbarProvidersManager.jsm
++++ b/browser/components/urlbar/UrlbarProvidersManager.jsm
+@@ -303,6 +303,12 @@ class Query {
+     let activePromises = [];
+     let maxPriority = -1;
+     for (let provider of this.providers) {
++      // Christ almighty
++      if (provider.name == "UrlbarProviderTopSites")
++      {
++        console.log("[UrlbarProvidersManager] Skipping provider: " + provider.name + " " + provider.type);
++        continue;
++      }
+       activePromises.push(
+         // Not all isActive implementations are async, so wrap the call in a
+         // promise so we can be sure we can call `then` on it.  Note that
+-- 
+2.27.0
+
