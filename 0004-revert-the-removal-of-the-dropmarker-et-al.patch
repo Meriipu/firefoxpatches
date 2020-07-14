@@ -1,4 +1,4 @@
-From f2f9a3c98abc41eefca57bfc52fd5caa4297d6db Mon Sep 17 00:00:00 2001
+From 0960e78aa7c9f2101d0ba61969b9631ec89e7257 Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
 Date: Mon, 13 Jul 2020 00:01:11 +0200
 Subject: [PATCH 4/6] revert the removal of the dropmarker et al.
@@ -11,9 +11,9 @@ avoiding one of the providers is necessary.
  browser/base/content/browser.xhtml            |  6 ++++-
  browser/components/urlbar/UrlbarInput.jsm     | 19 +++++++++++++++
  browser/components/urlbar/UrlbarView.jsm      |  2 ++
- .../locales/en-US/chrome/browser/browser.dtd  |  6 +++++
+ .../locales/en-US/chrome/browser/browser.dtd  |  2 ++
  .../themes/shared/urlbar-searchbar.inc.css    | 24 +++++++++++++++++++
- 6 files changed, 57 insertions(+), 1 deletion(-)
+ 6 files changed, 53 insertions(+), 1 deletion(-)
 
 diff --git a/browser/base/content/browser.css b/browser/base/content/browser.css
 index 808c03e88223..9df90a899796 100644
@@ -109,17 +109,13 @@ index ed664f5afb5c..af0f69e9e242 100644
      this.input.setAttribute("open", "true");
      this.input.startLayoutExtend();
 diff --git a/browser/locales/en-US/chrome/browser/browser.dtd b/browser/locales/en-US/chrome/browser/browser.dtd
-index f6120ac9d0a1..de772bafe899 100644
+index f6120ac9d0a1..28772c3faf70 100644
 --- a/browser/locales/en-US/chrome/browser/browser.dtd
 +++ b/browser/locales/en-US/chrome/browser/browser.dtd
-@@ -96,6 +96,12 @@ this container is a toolbar. This avoids double-speaking. -->
+@@ -96,6 +96,8 @@ this container is a toolbar. This avoids double-speaking. -->
  <!ENTITY printButton.label            "Print">
  <!ENTITY printButton.tooltip          "Print this page">
  
-+<!ENTITY urlbar.remoteControlNotificationAnchor.tooltip   "Browser is under remote control">
-+
-+<!ENTITY urlbar.permissionsGranted.tooltip       "You have granted this website additional permissions.">
-+
 +<!ENTITY urlbar.openHistoryPopup.tooltip                "Show history">
 +
  <!ENTITY searchItem.title             "Search">
