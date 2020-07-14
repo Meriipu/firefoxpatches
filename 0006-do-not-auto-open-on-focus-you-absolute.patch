@@ -1,4 +1,4 @@
-From 7f1070545fde0bc6a6d505a6e02feaa717b840ea Mon Sep 17 00:00:00 2001
+From 348bfe6152026b86fce1cdc4a1b6d12a6da294ab Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
 Date: Tue, 14 Jul 2020 06:08:02 +0200
 Subject: [PATCH 6/6] do not auto-open on focus you absolute
