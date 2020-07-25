@@ -1,7 +1,7 @@
 From cc7791c990569e74f92fc8ffc0825c7d27d5fbba Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
 Date: Sat, 11 Jul 2020 22:00:19 +0200
-Subject: [PATCH 1/6] restore click-selection behaviour to searchbar
+Subject: [PATCH 1/8] restore click-selection behaviour to searchbar
 
 * doubleclicking selects all
 * singleclicking selects nothing

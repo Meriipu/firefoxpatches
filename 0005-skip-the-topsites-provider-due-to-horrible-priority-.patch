@@ -1,7 +1,7 @@
 From f8eeb7a86296c7838b34eb3c0a53e583034fd689 Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
 Date: Tue, 14 Jul 2020 04:38:21 +0200
-Subject: [PATCH 5/6] skip the topsites provider due to horrible
+Subject: [PATCH 5/8] skip the topsites provider due to horrible
  priority-stealing behaviour
 
 even though history was getting sent to the query this provider seems

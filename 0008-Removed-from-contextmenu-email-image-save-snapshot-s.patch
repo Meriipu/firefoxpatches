@@ -1,0 +1,78 @@
+From e8abeb7c70e6d68b6c23bf7fc6156537e442a7f9 Mon Sep 17 00:00:00 2001
+From: Meriipu <Meriipu@users.noreply.github.com>
+Date: Sat, 25 Jul 2020 11:35:51 +0200
+Subject: [PATCH 8/8] Removed from contextmenu: email-image, save-snapshot,
+ send-to-device
+
+I do not use them. Countless times have I clicked email image, and
+occasionally I have accidentally saved a frame instead of saving the
+video itself.
+---
+ browser/base/content/browser-context.inc | 30 ------------------------
+ 1 file changed, 30 deletions(-)
+
+diff --git a/browser/base/content/browser-context.inc b/browser/base/content/browser-context.inc
+index 84f74c19f7bb..58de53ac54af 100644
+--- a/browser/base/content/browser-context.inc
++++ b/browser/base/content/browser-context.inc
+@@ -178,9 +178,6 @@
+       <menuitem id="context-saveimage"
+                 data-l10n-id="main-context-menu-image-save-as"
+                 oncommand="gContextMenu.saveMedia();"/>
+-      <menuitem id="context-sendimage"
+-                data-l10n-id="main-context-menu-image-email"
+-                oncommand="gContextMenu.sendMedia();"/>
+       <menuitem id="context-setDesktopBackground"
+                 data-l10n-id="main-context-menu-image-set-as-background"
+                 oncommand="gContextMenu.setDesktopBackground();"/>
+@@ -197,15 +194,6 @@
+       <menuitem id="context-saveaudio"
+                 data-l10n-id="main-context-menu-audio-save-as"
+                 oncommand="gContextMenu.saveMedia();"/>
+-      <menuitem id="context-video-saveimage"
+-                data-l10n-id="main-context-menu-video-image-save-as"
+-                oncommand="gContextMenu.saveVideoFrameAsImage();"/>
+-      <menuitem id="context-sendvideo"
+-                data-l10n-id="main-context-menu-video-email"
+-                oncommand="gContextMenu.sendMedia();"/>
+-      <menuitem id="context-sendaudio"
+-                data-l10n-id="main-context-menu-audio-email"
+-                oncommand="gContextMenu.sendMedia();"/>
+       <menuitem id="context-ctp-play"
+                 data-l10n-id="main-context-menu-plugin-play"
+                 oncommand="gContextMenu.playPlugin();"/>
+@@ -219,15 +207,6 @@
+       <menuitem id="context-pocket"
+                 data-l10n-id="main-context-menu-save-to-pocket"
+                 oncommand="Pocket.savePage(gContextMenu.browser, gContextMenu.browser.currentURI.spec, gContextMenu.browser.contentTitle);"/>
+-      <menuseparator id="context-sep-sendpagetodevice" class="sync-ui-item"
+-                     hidden="true"/>
+-      <menu id="context-sendpagetodevice"
+-            class="sync-ui-item"
+-            data-l10n-id="main-context-menu-send-to-device"
+-            hidden="true">
+-        <menupopup id="context-sendpagetodevice-popup"
+-                   onpopupshowing="(() => { gSync.populateSendTabToDevicesMenu(event.target, gBrowser.currentURI.spec, gBrowser.contentTitle); })()"/>
+-      </menu>
+       <menuseparator id="context-sep-viewbgimage"/>
+       <menuitem id="context-viewbgimage"
+                 data-l10n-id="main-context-menu-view-background-image"
+@@ -287,15 +266,6 @@
+                 oncommand="BrowserSearch.loadSearchFromContext(this.searchTerms, this.usePrivate, this.principal, this.csp);"/>
+       <menuitem id="context-searchselect-private"
+                 oncommand="BrowserSearch.loadSearchFromContext(this.searchTerms, true, this.principal, this.csp);"/>
+-      <menuseparator id="context-sep-sendlinktodevice" class="sync-ui-item"
+-                     hidden="true"/>
+-      <menu id="context-sendlinktodevice"
+-            class="sync-ui-item"
+-            data-l10n-id="main-context-menu-link-send-to-device"
+-            hidden="true">
+-        <menupopup id="context-sendlinktodevice-popup"
+-                   onpopupshowing="gSync.populateSendTabToDevicesMenu(event.target, gContextMenu.linkURL, gContextMenu.linkTextStr);"/>
+-      </menu>
+       <menuseparator id="frame-sep"/>
+       <menu id="frame" data-l10n-id="main-context-menu-frame">
+         <menupopup>
+-- 
+2.27.0
+

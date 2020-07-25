@@ -1,7 +1,7 @@
 From bbfa2c1b955a3fd77977a2b35915d9507f9fe963 Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
 Date: Sat, 11 Jul 2020 22:01:52 +0200
-Subject: [PATCH 3/6] hardcode to never strip https
+Subject: [PATCH 3/8] hardcode to never strip https
 
 ---
  browser/components/urlbar/UrlbarResult.jsm | 18 +++++++++++++-----
