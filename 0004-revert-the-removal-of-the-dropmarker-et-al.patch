@@ -1,7 +1,7 @@
 From 0960e78aa7c9f2101d0ba61969b9631ec89e7257 Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
 Date: Mon, 13 Jul 2020 00:01:11 +0200
-Subject: [PATCH 4/6] revert the removal of the dropmarker et al.
+Subject: [PATCH 4/8] revert the removal of the dropmarker et al.
 
 as of 78 this alone is not enough to have the dropmarker be functional
 some additional patches to fix autoOpen on focus/select as well as

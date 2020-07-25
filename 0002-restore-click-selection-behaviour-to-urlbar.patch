@@ -1,7 +1,7 @@
 From 8bfbaca72f4bdd5bf1310cba783e3b59fc35da77 Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
 Date: Sat, 11 Jul 2020 22:01:18 +0200
-Subject: [PATCH 2/6] restore click-selection behaviour to urlbar
+Subject: [PATCH 2/8] restore click-selection behaviour to urlbar
 
 * doubleclicking selects all
 * singleclicking selects nothing

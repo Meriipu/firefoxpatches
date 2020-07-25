@@ -21,6 +21,13 @@ with userChrome.css and userprefs so that the arrow is available, while
 still making it possible to make the urlbar not expand when clicked or
 focused (although it will expand if text is typed into it).
 <br/><br/>
+* 0007-A-minimum-tab-width-IS-a-minimum-tab-width.patch
+* 0008-Removed-from-contextmenu-email-image-save-snapshot-s.patch
+
+These patches make tabminwidth actually do something. Also removes dumb
+contextmenu entries.
+
+<br/><br/>
 * userChrome.css 
 
 contains some styling to make the bar not grow in size when clicked.

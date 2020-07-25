@@ -1,0 +1,27 @@
+From ce678bbe2e49d5530bc1965f41540288b35a82a5 Mon Sep 17 00:00:00 2001
+From: Meriipu <Meriipu@users.noreply.github.com>
+Date: Thu, 16 Jul 2020 13:27:10 +0200
+Subject: [PATCH 7/8] A minimum tab width IS a minimum tab width
+
+what is the point of the pref otherwise
+---
+ browser/base/content/tabbrowser-tabs.js | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/browser/base/content/tabbrowser-tabs.js b/browser/base/content/tabbrowser-tabs.js
+index da3988df9fc9..8f1d4274a08f 100644
+--- a/browser/base/content/tabbrowser-tabs.js
++++ b/browser/base/content/tabbrowser-tabs.js
+@@ -85,7 +85,8 @@
+         null,
+         (pref, prevValue, newValue) => (this._tabMinWidth = newValue),
+         newValue => {
+-          const LIMIT = 50;
++          // how about no
++          const LIMIT = 1;
+           return Math.max(newValue, LIMIT);
+         }
+       );
+-- 
+2.27.0
+
