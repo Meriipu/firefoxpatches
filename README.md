@@ -1,4 +1,6 @@
-# Now works for firefox-78 (instead of 77)
+# Now works for firefox-78 and firefox-79 (instead of 77)
+
+For me, they cleanly applied to firefox-79 without requiring changes from the firefox-78 ones.
 
 # Patch descriptions
 * 0001-restore-click-selection-behaviour-to-searchbar.patch
