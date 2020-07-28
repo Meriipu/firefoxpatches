@@ -1,6 +1,6 @@
-From a396e5cfb929245be6d7e882e2557faa2d9b0272 Mon Sep 17 00:00:00 2001
+From 0a2c8096cceede0f5ab82f26ef0029a36bf4e1b3 Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
-Date: Sat, 25 Jul 2020 11:35:51 +0200
+Date: Tue, 28 Jul 2020 22:48:15 +0200
 Subject: [PATCH 8/8] Removed from contextmenu: email-image, save-snapshot,
  send-to-device
 

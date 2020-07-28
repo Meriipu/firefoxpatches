@@ -1,6 +1,6 @@
-From 2acf878827c514eb9e81c83d8c0f501c3e9b35da Mon Sep 17 00:00:00 2001
+From 13281e63c1d1f43cf2007b9ea2511b50d116ab79 Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
-Date: Mon, 13 Jul 2020 00:01:11 +0200
+Date: Tue, 28 Jul 2020 22:45:33 +0200
 Subject: [PATCH 4/8] revert the removal of the dropmarker et al.
 
 as of 78 this alone is not enough to have the dropmarker be functional
@@ -28,10 +28,10 @@ index 808c03e88223..9df90a899796 100644
  #urlbar:not([focused]) > #urlbar-input-container > #urlbar-go-button {
    display: none;
 diff --git a/browser/base/content/browser.xhtml b/browser/base/content/browser.xhtml
-index d8bb5aca778f..792cadc8b475 100644
+index 20253567bec7..cee3a0ca2d88 100644
 --- a/browser/base/content/browser.xhtml
 +++ b/browser/base/content/browser.xhtml
-@@ -1038,6 +1038,9 @@
+@@ -1042,6 +1042,9 @@
                       class="urlbar-icon"
                       onclick="gURLBar.handleCommand(event);"
                       data-l10n-id="urlbar-go-button"/>
@@ -42,7 +42,7 @@ index d8bb5aca778f..792cadc8b475 100644
                  <toolbartabstop/>
                  <hbox id="contextual-feature-recommendation" role="button" hidden="true">
 diff --git a/browser/components/urlbar/UrlbarInput.jsm b/browser/components/urlbar/UrlbarInput.jsm
-index b9fab02f8926..5cb137c396bd 100644
+index 63b5552601f0..2dbae3ab6a57 100644
 --- a/browser/components/urlbar/UrlbarInput.jsm
 +++ b/browser/components/urlbar/UrlbarInput.jsm
 @@ -151,6 +151,8 @@ class UrlbarInput {
@@ -60,9 +60,9 @@ index b9fab02f8926..5cb137c396bd 100644
  
 +    this.dropmarker.addEventListener("mousedown", this);
      this.window.addEventListener("mousedown", this);
-     this.textbox.addEventListener("mousedown", this);
-     this._inputContainer.addEventListener("click", this);
-@@ -2159,6 +2162,22 @@ class UrlbarInput {
+     if (AppConstants.platform == "win") {
+       this.window.addEventListener("draggableregionleftmousedown", this);
+@@ -2182,6 +2185,22 @@ class UrlbarInput {
            this.view.autoOpen({ event });
          }
          break;
@@ -86,10 +86,10 @@ index b9fab02f8926..5cb137c396bd 100644
          if (this._mousedownOnUrlbarDescendant) {
            this._mousedownOnUrlbarDescendant = false;
 diff --git a/browser/components/urlbar/UrlbarView.jsm b/browser/components/urlbar/UrlbarView.jsm
-index ed664f5afb5c..af0f69e9e242 100644
+index aa220626f3fd..37bc9daf3f91 100644
 --- a/browser/components/urlbar/UrlbarView.jsm
 +++ b/browser/components/urlbar/UrlbarView.jsm
-@@ -354,6 +354,7 @@ class UrlbarView {
+@@ -374,6 +374,7 @@ class UrlbarView {
  
      this.removeAccessibleFocus();
      this.input.inputField.setAttribute("aria-expanded", "false");
@@ -97,7 +97,7 @@ index ed664f5afb5c..af0f69e9e242 100644
  
      this.input.removeAttribute("open");
      this.input.endLayoutExtend();
-@@ -608,6 +609,7 @@ class UrlbarView {
+@@ -716,6 +717,7 @@ class UrlbarView {
      this._enableOrDisableRowWrap();
  
      this.input.inputField.setAttribute("aria-expanded", "true");
