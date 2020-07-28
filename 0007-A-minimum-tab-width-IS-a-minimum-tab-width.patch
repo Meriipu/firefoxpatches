@@ -1,6 +1,6 @@
-From d5a6de32e445a8f5931210e8dba5ba333cc1d85a Mon Sep 17 00:00:00 2001
+From eede4931fe8dc120b953f35f07ecca1c97c35b12 Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
-Date: Thu, 16 Jul 2020 13:27:10 +0200
+Date: Tue, 28 Jul 2020 22:47:48 +0200
 Subject: [PATCH 7/8] A minimum tab width IS a minimum tab width
 
 what is the point of the pref otherwise
