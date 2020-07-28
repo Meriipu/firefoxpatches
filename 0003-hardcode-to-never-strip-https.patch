@@ -39,5 +39,5 @@ index 58a0ece6ec25..453fa021808d 100644
        }
        payloadInfo.displayUrl[0] = Services.textToSubURI.unEscapeURIForUI(url);
 -- 
-2.27.0
+2.28.0
 

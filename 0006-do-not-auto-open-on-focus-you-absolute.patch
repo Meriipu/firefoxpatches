@@ -1,4 +1,4 @@
-From 348bfe6152026b86fce1cdc4a1b6d12a6da294ab Mon Sep 17 00:00:00 2001
+From 3504281c33e62c8c054f6f475d2e8cd63db67880 Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
 Date: Tue, 14 Jul 2020 06:08:02 +0200
 Subject: [PATCH 6/8] do not auto-open on focus you absolute
@@ -33,5 +33,5 @@ index 5cb137c396bd..85da7ce150a5 100644
          break;
        case this.dropmarker:
 -- 
-2.27.0
+2.28.0
 

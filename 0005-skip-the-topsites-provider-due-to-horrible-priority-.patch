@@ -1,4 +1,4 @@
-From f8eeb7a86296c7838b34eb3c0a53e583034fd689 Mon Sep 17 00:00:00 2001
+From e62e47c5b9e58f9ac99873b748e06e5a8f1c6ff7 Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
 Date: Tue, 14 Jul 2020 04:38:21 +0200
 Subject: [PATCH 5/8] skip the topsites provider due to horrible
@@ -33,5 +33,5 @@ index 9d9e547897d3..b6a851c0f78a 100644
          // Not all isActive implementations are async, so wrap the call in a
          // promise so we can be sure we can call `then` on it.  Note that
 -- 
-2.27.0
+2.28.0
 
