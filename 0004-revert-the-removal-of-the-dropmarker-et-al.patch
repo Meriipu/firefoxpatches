@@ -1,4 +1,4 @@
-From 0960e78aa7c9f2101d0ba61969b9631ec89e7257 Mon Sep 17 00:00:00 2001
+From 2acf878827c514eb9e81c83d8c0f501c3e9b35da Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
 Date: Mon, 13 Jul 2020 00:01:11 +0200
 Subject: [PATCH 4/8] revert the removal of the dropmarker et al.
@@ -8,12 +8,12 @@ some additional patches to fix autoOpen on focus/select as well as
 avoiding one of the providers is necessary.
 ---
  browser/base/content/browser.css              |  1 +
- browser/base/content/browser.xhtml            |  6 ++++-
+ browser/base/content/browser.xhtml            |  3 +++
  browser/components/urlbar/UrlbarInput.jsm     | 19 +++++++++++++++
  browser/components/urlbar/UrlbarView.jsm      |  2 ++
  .../locales/en-US/chrome/browser/browser.dtd  |  2 ++
  .../themes/shared/urlbar-searchbar.inc.css    | 24 +++++++++++++++++++
- 6 files changed, 53 insertions(+), 1 deletion(-)
+ 6 files changed, 51 insertions(+)
 
 diff --git a/browser/base/content/browser.css b/browser/base/content/browser.css
 index 808c03e88223..9df90a899796 100644
@@ -28,16 +28,13 @@ index 808c03e88223..9df90a899796 100644
  #urlbar:not([focused]) > #urlbar-input-container > #urlbar-go-button {
    display: none;
 diff --git a/browser/base/content/browser.xhtml b/browser/base/content/browser.xhtml
-index d8bb5aca778f..93d785978583 100644
+index d8bb5aca778f..792cadc8b475 100644
 --- a/browser/base/content/browser.xhtml
 +++ b/browser/base/content/browser.xhtml
-@@ -1037,7 +1037,11 @@
-               <image id="urlbar-go-button"
+@@ -1038,6 +1038,9 @@
                       class="urlbar-icon"
                       onclick="gURLBar.handleCommand(event);"
--                     data-l10n-id="urlbar-go-button"/>
-+                     data-l10n-id="urlbar-go-button"
-+                     tooltiptext="&goEndCap.tooltip;"/>
+                      data-l10n-id="urlbar-go-button"/>
 +              <image class="urlbar-history-dropmarker urlbar-icon chromeclass-toolbar-additional"
 +                     hidden="false"
 +                     tooltiptext="&urlbar.openHistoryPopup.tooltip;"/>
@@ -164,5 +161,5 @@ index 0b1f69342995..99137e29ba02 100644
  #urlbar[cfr-recommendation-state] #urlbar-input {
    /* A mask-image is usually only defined for the url bar when text overflows.
 -- 
-2.27.0
+2.28.0
 

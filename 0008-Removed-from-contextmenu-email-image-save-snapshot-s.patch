@@ -1,4 +1,4 @@
-From e8abeb7c70e6d68b6c23bf7fc6156537e442a7f9 Mon Sep 17 00:00:00 2001
+From a396e5cfb929245be6d7e882e2557faa2d9b0272 Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
 Date: Sat, 25 Jul 2020 11:35:51 +0200
 Subject: [PATCH 8/8] Removed from contextmenu: email-image, save-snapshot,
@@ -74,5 +74,5 @@ index 84f74c19f7bb..58de53ac54af 100644
        <menu id="frame" data-l10n-id="main-context-menu-frame">
          <menupopup>
 -- 
-2.27.0
+2.28.0
 
