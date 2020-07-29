@@ -6,3 +6,9 @@ browser.urlbar.update1.interventions  false
 browser.urlbar.update1.searchTips false 
 browser.urlbar.update2.expandTextOnFocus	false
 toolkit.legacyUserProfileCustomizations.stylesheets  true
+
+// note that while this will make the bar not grow in size when focused,
+// the bar will still grow outwards in every direction when it drops down.
+// This option alone is therefore not really that useful, and instead the
+// CSS in userChrome.css is used to never grow outwards (even when dropping).
+ui.prefersReducedMotion  1  
