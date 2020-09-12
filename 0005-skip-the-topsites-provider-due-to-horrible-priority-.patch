@@ -1,6 +1,6 @@
-From 965ccaed2d01417e94485982620c819020532cd9 Mon Sep 17 00:00:00 2001
+From 5c2c695be167792b6bedf3a617e597cc341ee7b2 Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
-Date: Tue, 28 Jul 2020 22:46:06 +0200
+Date: Sat, 12 Sep 2020 05:31:03 +0200
 Subject: [PATCH 5/8] skip the topsites provider due to horrible
  priority-stealing behaviour
 
@@ -12,17 +12,18 @@ nothing.
 With the topsites provider removed, firefox is forced to use the
 history one or whatever it is called.
 ---
- browser/components/urlbar/UrlbarProvidersManager.jsm | 6 ++++++
- 1 file changed, 6 insertions(+)
+ browser/components/urlbar/UrlbarProvidersManager.jsm | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/browser/components/urlbar/UrlbarProvidersManager.jsm b/browser/components/urlbar/UrlbarProvidersManager.jsm
-index 1a0a2c085052..11a6a6e5dba1 100644
+index 58b0911912ad..4b33f8d3f1c6 100644
 --- a/browser/components/urlbar/UrlbarProvidersManager.jsm
 +++ b/browser/components/urlbar/UrlbarProvidersManager.jsm
-@@ -325,6 +325,12 @@ class Query {
-     let activePromises = [];
-     let maxPriority = -1;
-     for (let provider of this.providers) {
+@@ -336,6 +336,13 @@ class Query {
+       //     return;
+       //   }
+       provider.queryInstance = this;
++
 +      // Christ almighty
 +      if (provider.name == "UrlbarProviderTopSites")
 +      {
