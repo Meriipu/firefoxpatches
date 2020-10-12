@@ -1,7 +1,7 @@
-From c7e54d2128aab5c107c29a9e71d65a9c7655e76c Mon Sep 17 00:00:00 2001
+From efa5dea169bbc594e61a51d15a3a18ad7c51cec2 Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
-Date: Sat, 12 Sep 2020 05:33:07 +0200
-Subject: [PATCH 8/8] Removed from contextmenu: email-image, save-snapshot,
+Date: Mon, 12 Oct 2020 02:20:25 +0200
+Subject: [PATCH 8/9] Removed from contextmenu: email-image, save-snapshot,
  send-to-device
 
 I do not use them. Countless times have I clicked email image, and

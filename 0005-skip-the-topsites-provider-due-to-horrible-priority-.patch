@@ -1,7 +1,7 @@
-From 5c2c695be167792b6bedf3a617e597cc341ee7b2 Mon Sep 17 00:00:00 2001
+From 637f5afe18896b99cccdd00e8972941548748e79 Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
-Date: Sat, 12 Sep 2020 05:31:03 +0200
-Subject: [PATCH 5/8] skip the topsites provider due to horrible
+Date: Mon, 12 Oct 2020 02:19:24 +0200
+Subject: [PATCH 5/9] skip the topsites provider due to horrible
  priority-stealing behaviour
 
 even though history was getting sent to the query this provider seems
@@ -16,10 +16,10 @@ history one or whatever it is called.
  1 file changed, 7 insertions(+)
 
 diff --git a/browser/components/urlbar/UrlbarProvidersManager.jsm b/browser/components/urlbar/UrlbarProvidersManager.jsm
-index 58b0911912ad..4b33f8d3f1c6 100644
+index 0b3d015113b8..a286e72f8fc0 100644
 --- a/browser/components/urlbar/UrlbarProvidersManager.jsm
 +++ b/browser/components/urlbar/UrlbarProvidersManager.jsm
-@@ -336,6 +336,13 @@ class Query {
+@@ -353,6 +353,13 @@ class Query {
        //     return;
        //   }
        provider.queryInstance = this;

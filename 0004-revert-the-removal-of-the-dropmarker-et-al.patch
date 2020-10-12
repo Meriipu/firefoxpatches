@@ -1,25 +1,33 @@
-From b449918e3c1c42f67b2e1e6ec918747398da97df Mon Sep 17 00:00:00 2001
+From 943398ff9a266de0c1c1939d3454a47b4195f68f Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
-Date: Sat, 12 Sep 2020 05:27:56 +0200
-Subject: [PATCH 4/8] revert the removal of the dropmarker et al.
+Date: Mon, 12 Oct 2020 02:18:42 +0200
+Subject: [PATCH 4/9] revert the removal of the dropmarker et al.
 
 as of 78 this alone is not enough to have the dropmarker be functional
 some additional patches to fix autoOpen on focus/select as well as
-avoiding one of the providers is necessary.
+avoiding one of the providers is necessary. This commit alone only adds
+the dropmarker back cosmetically.
+
+Hardcode tooltiptext instead of dealing with i10l (mozilla removed the
+entries and keep changing up how they are organized so so they have to
+be added back manually, which is unnecessary effort since the
+translations likely are removed as well).  Mozilla changing this
+organization up appears to be the cause of the occasional error:
+  `XML Parsing Error: undefined entity`
+when starting Firefox after applying the patches to recent releases.
 ---
  browser/base/content/browser.css              |  1 +
  browser/base/content/browser.xhtml            |  3 +++
  browser/components/urlbar/UrlbarInput.jsm     | 19 +++++++++++++++
  browser/components/urlbar/UrlbarView.jsm      |  2 ++
- .../locales/en-US/chrome/browser/browser.dtd  |  2 ++
  .../themes/shared/urlbar-searchbar.inc.css    | 24 +++++++++++++++++++
- 6 files changed, 51 insertions(+)
+ 5 files changed, 49 insertions(+)
 
 diff --git a/browser/base/content/browser.css b/browser/base/content/browser.css
-index 5a00107d8f88..681524a9bd8f 100644
+index 085e47cad9f0..45fc6d7f10bd 100644
 --- a/browser/base/content/browser.css
 +++ b/browser/base/content/browser.css
-@@ -707,6 +707,7 @@ toolbar:not(#TabsToolbar) > #personal-bookmarks {
+@@ -704,6 +704,7 @@ toolbar:not(#TabsToolbar) > #personal-bookmarks {
  #urlbar-input-container[pageproxystate=invalid] > #page-action-buttons > .urlbar-page-action,
  #identity-box.chromeUI ~ #page-action-buttons > .urlbar-page-action:not(#star-button-box),
  #urlbar[usertyping] > #urlbar-input-container > #page-action-buttons > #urlbar-zoom-button,
@@ -28,24 +36,24 @@ index 5a00107d8f88..681524a9bd8f 100644
  #urlbar:not([focused]) > #urlbar-input-container > #urlbar-go-button {
    display: none;
 diff --git a/browser/base/content/browser.xhtml b/browser/base/content/browser.xhtml
-index 93b1b0932bf9..eb965d1c58be 100644
+index 965fb8b98b81..ce0449986bb3 100644
 --- a/browser/base/content/browser.xhtml
 +++ b/browser/base/content/browser.xhtml
-@@ -1639,6 +1639,9 @@
+@@ -1877,6 +1877,9 @@
                       class="urlbar-icon"
                       onclick="gURLBar.handleCommand(event);"
                       data-l10n-id="urlbar-go-button"/>
 +              <image class="urlbar-history-dropmarker urlbar-icon chromeclass-toolbar-additional"
 +                     hidden="false"
-+                     tooltiptext="&urlbar.openHistoryPopup.tooltip;"/>
++                     tooltiptext="Show history"/>
                <hbox id="page-action-buttons" context="pageActionContextMenu">
                  <toolbartabstop/>
                  <hbox id="contextual-feature-recommendation" role="button" hidden="true">
 diff --git a/browser/components/urlbar/UrlbarInput.jsm b/browser/components/urlbar/UrlbarInput.jsm
-index 240dba7461d9..e9f8f182e707 100644
+index 989fb8d3b649..87416797cb23 100644
 --- a/browser/components/urlbar/UrlbarInput.jsm
 +++ b/browser/components/urlbar/UrlbarInput.jsm
-@@ -152,6 +152,8 @@ class UrlbarInput {
+@@ -155,6 +155,8 @@ class UrlbarInput {
      }
  
      this.inputField = this.querySelector("#urlbar-input");
@@ -54,7 +62,7 @@ index 240dba7461d9..e9f8f182e707 100644
      this._inputContainer = this.querySelector("#urlbar-input-container");
      this._identityBox = this.querySelector("#identity-box");
      this._searchModeIndicator = this.querySelector(
-@@ -206,6 +208,7 @@ class UrlbarInput {
+@@ -209,6 +211,7 @@ class UrlbarInput {
        this.addEventListener(name, this);
      }
  
@@ -62,7 +70,7 @@ index 240dba7461d9..e9f8f182e707 100644
      this.window.addEventListener("mousedown", this);
      if (AppConstants.platform == "win") {
        this.window.addEventListener("draggableregionleftmousedown", this);
-@@ -2254,6 +2257,22 @@ class UrlbarInput {
+@@ -2398,6 +2401,22 @@ class UrlbarInput {
            this.view.autoOpen({ event });
          }
          break;
@@ -86,10 +94,10 @@ index 240dba7461d9..e9f8f182e707 100644
          if (this._mousedownOnUrlbarDescendant) {
            this._mousedownOnUrlbarDescendant = false;
 diff --git a/browser/components/urlbar/UrlbarView.jsm b/browser/components/urlbar/UrlbarView.jsm
-index 3448feb45007..25faffab09d8 100644
+index 17b0faed0808..def090cba822 100644
 --- a/browser/components/urlbar/UrlbarView.jsm
 +++ b/browser/components/urlbar/UrlbarView.jsm
-@@ -384,6 +384,7 @@ class UrlbarView {
+@@ -388,6 +388,7 @@ class UrlbarView {
  
      this.removeAccessibleFocus();
      this.input.inputField.setAttribute("aria-expanded", "false");
@@ -97,7 +105,7 @@ index 3448feb45007..25faffab09d8 100644
  
      this.input.removeAttribute("open");
      this.input.endLayoutExtend();
-@@ -783,6 +784,7 @@ class UrlbarView {
+@@ -743,6 +744,7 @@ class UrlbarView {
      this._enableOrDisableRowWrap();
  
      this.input.inputField.setAttribute("aria-expanded", "true");
@@ -105,21 +113,8 @@ index 3448feb45007..25faffab09d8 100644
  
      this.input.setAttribute("open", "true");
      this.input.startLayoutExtend();
-diff --git a/browser/locales/en-US/chrome/browser/browser.dtd b/browser/locales/en-US/chrome/browser/browser.dtd
-index f6120ac9d0a1..28772c3faf70 100644
---- a/browser/locales/en-US/chrome/browser/browser.dtd
-+++ b/browser/locales/en-US/chrome/browser/browser.dtd
-@@ -96,6 +96,8 @@ this container is a toolbar. This avoids double-speaking. -->
- <!ENTITY printButton.label            "Print">
- <!ENTITY printButton.tooltip          "Print this page">
- 
-+<!ENTITY urlbar.openHistoryPopup.tooltip                "Show history">
-+
- <!ENTITY searchItem.title             "Search">
- 
- <!-- Toolbar items -->
 diff --git a/browser/themes/shared/urlbar-searchbar.inc.css b/browser/themes/shared/urlbar-searchbar.inc.css
-index a5da19eb186f..1e81aab5fdfa 100644
+index 954cf74a14ad..9a2394d95857 100644
 --- a/browser/themes/shared/urlbar-searchbar.inc.css
 +++ b/browser/themes/shared/urlbar-searchbar.inc.css
 @@ -530,6 +530,19 @@
