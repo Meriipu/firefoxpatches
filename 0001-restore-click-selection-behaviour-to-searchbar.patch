@@ -1,7 +1,7 @@
-From 58f79ea9aa38cfb89bddb1a0e560c6ac2e1f0b23 Mon Sep 17 00:00:00 2001
+From 73aad992aeb61d29397162f4342eb8d745295701 Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
-Date: Sat, 12 Sep 2020 05:26:22 +0200
-Subject: [PATCH 1/8] restore click-selection behaviour to searchbar
+Date: Mon, 12 Oct 2020 02:17:08 +0200
+Subject: [PATCH 1/9] restore click-selection behaviour to searchbar
 
 * doubleclicking selects all
 * singleclicking selects nothing
@@ -10,10 +10,10 @@ Subject: [PATCH 1/8] restore click-selection behaviour to searchbar
  1 file changed, 9 insertions(+), 1 deletion(-)
 
 diff --git a/browser/components/search/content/searchbar.js b/browser/components/search/content/searchbar.js
-index fd9035df4451..e8b68532445e 100644
+index 347e78b1dc54..669d96ebde94 100644
 --- a/browser/components/search/content/searchbar.js
 +++ b/browser/components/search/content/searchbar.js
-@@ -451,7 +451,8 @@
+@@ -453,7 +453,8 @@
          document.activeElement == this._textbox &&
          this._textbox.selectionStart == this._textbox.selectionEnd
        ) {
@@ -23,7 +23,7 @@ index fd9035df4451..e8b68532445e 100644
        }
      }
  
-@@ -552,6 +553,13 @@
+@@ -554,6 +555,13 @@
            // is text in the textbox.
            this.openSuggestionsPanel(true);
          }
