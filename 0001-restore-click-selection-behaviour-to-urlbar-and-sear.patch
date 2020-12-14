@@ -1,19 +1,48 @@
-From 39deb71082cee10ef6f48836bd27df0736439828 Mon Sep 17 00:00:00 2001
+From c0d3d1c2e2035bfda3f5398a607ea3477f66d6fa Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
-Date: Mon, 12 Oct 2020 02:17:54 +0200
-Subject: [PATCH 2/9] restore click-selection behaviour to urlbar
+Date: Mon, 14 Dec 2020 06:27:54 +0100
+Subject: [PATCH 1/8] restore click-selection behaviour to urlbar and searchbar
 
 * doubleclicking selects all
 * singleclicking selects nothing
 ---
- browser/components/urlbar/UrlbarInput.jsm | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ browser/components/search/content/searchbar.js | 10 +++++++++-
+ browser/components/urlbar/UrlbarInput.jsm      | 15 ++++++++++-----
+ 2 files changed, 19 insertions(+), 6 deletions(-)
 
+diff --git a/browser/components/search/content/searchbar.js b/browser/components/search/content/searchbar.js
+index 1259fb5fe2e0..a77099d382e6 100644
+--- a/browser/components/search/content/searchbar.js
++++ b/browser/components/search/content/searchbar.js
+@@ -461,7 +461,8 @@
+         document.activeElement == this._textbox &&
+         this._textbox.selectionStart == this._textbox.selectionEnd
+       ) {
+-        this.select();
++        //this.select();
++        this._textbox.editor.selectsAll();
+       }
+     }
+ 
+@@ -562,6 +563,13 @@
+           // is text in the textbox.
+           this.openSuggestionsPanel(true);
+         }
++
++        // select everything (doubleclick)
++        if (event.detail == 2)
++        {
++          this._textbox.editor.selectAll();
++          event.preventDefault();
++        }
+       });
+     }
+ 
 diff --git a/browser/components/urlbar/UrlbarInput.jsm b/browser/components/urlbar/UrlbarInput.jsm
-index f9711052d015..989fb8d3b649 100644
+index d85494bb027d..964c06907c7a 100644
 --- a/browser/components/urlbar/UrlbarInput.jsm
 +++ b/browser/components/urlbar/UrlbarInput.jsm
-@@ -2190,14 +2190,16 @@ class UrlbarInput {
+@@ -2605,14 +2605,16 @@ class UrlbarInput {
     * Determines if we should select all the text in the Urlbar based on the
     *  Urlbar state, and whether the selection is empty.
     */
@@ -32,7 +61,7 @@ index f9711052d015..989fb8d3b649 100644
      }
    }
  
-@@ -2295,7 +2297,7 @@ class UrlbarInput {
+@@ -2718,7 +2720,7 @@ class UrlbarInput {
        return;
      }
  
@@ -41,7 +70,7 @@ index f9711052d015..989fb8d3b649 100644
    }
  
    _on_focus(event) {
-@@ -2328,7 +2330,7 @@ class UrlbarInput {
+@@ -2751,7 +2753,7 @@ class UrlbarInput {
      if (this.focusedViaMousedown) {
        this.view.autoOpen({ event });
      } else if (this.inputField.hasAttribute("refocused-by-panel")) {
@@ -50,7 +79,7 @@ index f9711052d015..989fb8d3b649 100644
      }
  
      this._updateUrlTooltip();
-@@ -2386,7 +2388,10 @@ class UrlbarInput {
+@@ -2809,7 +2811,10 @@ class UrlbarInput {
            this.selectionStart = this.selectionEnd = 0;
          }
  
@@ -63,5 +92,5 @@ index f9711052d015..989fb8d3b649 100644
            this.search(UrlbarTokenizer.RESTRICT.SEARCH);
          } else {
 -- 
-2.28.0
+2.29.2
 

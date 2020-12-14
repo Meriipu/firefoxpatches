@@ -1,17 +1,17 @@
-From 72a388c8af7f669e9d54f5acf5b29c3b0aae7b62 Mon Sep 17 00:00:00 2001
+From 2480d16d6a0f6081b5da18bd326573dc8e1140d3 Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
-Date: Mon, 12 Oct 2020 02:18:18 +0200
-Subject: [PATCH 3/9] hardcode to never strip https
+Date: Mon, 14 Dec 2020 06:28:51 +0100
+Subject: [PATCH 2/8] hardcode to never strip https
 
 ---
  browser/components/urlbar/UrlbarResult.jsm | 18 +++++++++++++-----
  1 file changed, 13 insertions(+), 5 deletions(-)
 
 diff --git a/browser/components/urlbar/UrlbarResult.jsm b/browser/components/urlbar/UrlbarResult.jsm
-index 3cd14dc36a02..d4c4e3370d34 100644
+index d7deaface690..b148e89b6bb2 100644
 --- a/browser/components/urlbar/UrlbarResult.jsm
 +++ b/browser/components/urlbar/UrlbarResult.jsm
-@@ -228,13 +228,21 @@ class UrlbarResult {
+@@ -231,13 +231,21 @@ class UrlbarResult {
        // For display purposes we need to unescape the url.
        payloadInfo.displayUrl = [...payloadInfo.url];
        let url = payloadInfo.displayUrl[0];
@@ -39,5 +39,5 @@ index 3cd14dc36a02..d4c4e3370d34 100644
        }
        payloadInfo.displayUrl[0] = Services.textToSubURI.unEscapeURIForUI(url);
 -- 
-2.28.0
+2.29.2
 

@@ -1,7 +1,7 @@
-From b7cd351234ae33cdee1e1804bc0a44ee35204a42 Mon Sep 17 00:00:00 2001
+From bdc6d233fd20ec4f8d03144c03c959e4f223193a Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
-Date: Mon, 12 Oct 2020 02:20:07 +0200
-Subject: [PATCH 7/9] A minimum tab width IS a minimum tab width
+Date: Mon, 14 Dec 2020 06:31:41 +0100
+Subject: [PATCH 6/8] A minimum tab width IS a minimum tab width
 
 what is the point of the pref otherwise
 ---
@@ -23,5 +23,5 @@ index da3988df9fc9..8f1d4274a08f 100644
          }
        );
 -- 
-2.28.0
+2.29.2
 
