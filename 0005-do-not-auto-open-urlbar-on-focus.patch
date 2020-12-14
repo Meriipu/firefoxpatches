@@ -1,18 +1,17 @@
-From aa04d1c967512ea03b603c437c6f363796d14819 Mon Sep 17 00:00:00 2001
+From 7077b4e3246bc37f6805dc4d196d14ccec6cc487 Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
-Date: Mon, 12 Oct 2020 02:19:49 +0200
-Subject: [PATCH 6/9] do not auto-open on focus you absolute
+Date: Mon, 14 Dec 2020 06:31:25 +0100
+Subject: [PATCH 5/8] do not auto-open urlbar on focus
 
-thanks
 ---
  browser/components/urlbar/UrlbarInput.jsm | 6 ++++--
  1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/browser/components/urlbar/UrlbarInput.jsm b/browser/components/urlbar/UrlbarInput.jsm
-index 87416797cb23..5ba350cc33e6 100644
+index 989b1611afb1..f7f16d778b17 100644
 --- a/browser/components/urlbar/UrlbarInput.jsm
 +++ b/browser/components/urlbar/UrlbarInput.jsm
-@@ -2331,7 +2331,8 @@ class UrlbarInput {
+@@ -2754,7 +2754,8 @@ class UrlbarInput {
      this.startLayoutExtend();
  
      if (this.focusedViaMousedown) {
@@ -22,7 +21,7 @@ index 87416797cb23..5ba350cc33e6 100644
      } else if (this.inputField.hasAttribute("refocused-by-panel")) {
        this._maybeSelectAll(true); // not sure what true here does
      }
-@@ -2398,7 +2399,8 @@ class UrlbarInput {
+@@ -2821,7 +2822,8 @@ class UrlbarInput {
            this._preventClickSelectsAll = true;
            this.search(UrlbarTokenizer.RESTRICT.SEARCH);
          } else {
@@ -33,5 +32,5 @@ index 87416797cb23..5ba350cc33e6 100644
          break;
        case this.dropmarker:
 -- 
-2.28.0
+2.29.2
 
