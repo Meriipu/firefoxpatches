@@ -1,0 +1,42 @@
+From 7874ec4a1f25aa37c3a8852364d4310f3a1e1412 Mon Sep 17 00:00:00 2001
+From: Meriipu <Meriipu@users.noreply.github.com>
+Date: Sat, 22 May 2021 17:14:26 +0200
+Subject: [PATCH 09/10] Stop resetting search engines on update
+
+---
+ toolkit/components/search/SearchService.jsm | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/toolkit/components/search/SearchService.jsm b/toolkit/components/search/SearchService.jsm
+index 193c5d3d20cc..adc4b9de008b 100644
+--- a/toolkit/components/search/SearchService.jsm
++++ b/toolkit/components/search/SearchService.jsm
+@@ -383,6 +383,12 @@ SearchService.prototype = {
+         await this.removeEngine(engine);
+         engineRemoved = true;
+       }
++      // Find a better way to fund your executive's extravagant lifestyles
++      // than breaking search engine configs of users every single update.
++      else if (engine.name != "DuckDuckGo") {
++        await this.removeEngine(engine);
++        engineRemoved = true;
++      }
+     }
+     // If we've removed an engine, and we don't have any left, we need to
+     // reload the engines - it is possible the settings just had one engine in it,
+@@ -415,6 +421,12 @@ SearchService.prototype = {
+     ) {
+       return true;
+     }
++
++    // Find a better way to fund your executive's extravagant lifestyles
++    // than breaking search engine configs of users every single update.
++    if (engine.name != "DuckDuckGo") {
++      return true;
++    }
+     return false;
+   },
+ 
+-- 
+2.31.1
+

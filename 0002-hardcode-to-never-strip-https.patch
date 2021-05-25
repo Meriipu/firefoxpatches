@@ -1,43 +1,29 @@
-From 2480d16d6a0f6081b5da18bd326573dc8e1140d3 Mon Sep 17 00:00:00 2001
+From 9087eb5d221a3aab784e7cabb23f137b894e6eda Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
-Date: Mon, 14 Dec 2020 06:28:51 +0100
-Subject: [PATCH 2/8] hardcode to never strip https
+Date: Sat, 22 May 2021 15:34:17 +0200
+Subject: [PATCH 02/10] hardcode to never strip https
 
 ---
- browser/components/urlbar/UrlbarResult.jsm | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ browser/components/urlbar/UrlbarResult.jsm | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/browser/components/urlbar/UrlbarResult.jsm b/browser/components/urlbar/UrlbarResult.jsm
-index d7deaface690..b148e89b6bb2 100644
+index 8848d95c4873..281dfe4c1b34 100644
 --- a/browser/components/urlbar/UrlbarResult.jsm
 +++ b/browser/components/urlbar/UrlbarResult.jsm
-@@ -231,13 +231,21 @@ class UrlbarResult {
+@@ -233,7 +233,11 @@ class UrlbarResult {
        // For display purposes we need to unescape the url.
        payloadInfo.displayUrl = [...payloadInfo.url];
        let url = payloadInfo.displayUrl[0];
+-      if (url && UrlbarPrefs.get("trimURLs")) {
 +      // TRASHBAR: This chunk of code trims urls. Restore behaviour to before
 +      // the pref. stripHttps was removed, but hardcode every instance of the
 +      // pref to false (do not strip https no matter what). The trimUrl option
 +      // still exists in 77.0.1, so for now this can stay.
-       if (url && UrlbarPrefs.get("trimURLs")) {
--        url = BrowserUtils.removeSingleTrailingSlashFromURL(url);
--        if (url.startsWith("https://")) {
--          url = url.substring(8);
--          if (url.startsWith("www.")) {
--            url = url.substring(4);
-+        if (false) { // TRASHBAR: if (update1.view.stripHttps) -- hardcode pref to false
-+          url = BrowserUtils.removeSingleTrailingSlashFromURL(url);
-+          if (url.startsWith("https://")) {
-+            url = url.substring(8);
-+            if (url.startsWith("www.")) {
-+              url = url.substring(4);
-+            }
-           }
-+        } else {
-+          url = BrowserUtils.trimURL(url);
-         }
-       }
-       payloadInfo.displayUrl[0] = Services.textToSubURI.unEscapeURIForUI(url);
++      if (false && url && UrlbarPrefs.get("trimURLs")) {
+         url = BrowserUIUtils.removeSingleTrailingSlashFromURL(url);
+         if (url.startsWith("https://")) {
+           url = url.substring(8);
 -- 
-2.29.2
+2.31.1
 

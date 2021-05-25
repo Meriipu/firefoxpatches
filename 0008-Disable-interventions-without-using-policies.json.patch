@@ -1,14 +1,14 @@
-From 241a043f3cdf932ef38fbf64b754550cbf6f7797 Mon Sep 17 00:00:00 2001
+From 2978419e9afa5f5cda2d027d3e0d6119b79eaeaf Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
-Date: Mon, 14 Dec 2020 06:33:11 +0100
-Subject: [PATCH 8/8] Disable interventions (without using policies.json)
+Date: Sat, 22 May 2021 17:13:35 +0200
+Subject: [PATCH 08/10] Disable interventions (without using policies.json)
 
 ---
  browser/components/urlbar/UrlbarProviderInterventions.jsm | 2 ++
  1 file changed, 2 insertions(+)
 
 diff --git a/browser/components/urlbar/UrlbarProviderInterventions.jsm b/browser/components/urlbar/UrlbarProviderInterventions.jsm
-index d303da0f491b..644876e3e521 100644
+index e22886ce9261..d005e8e7eb16 100644
 --- a/browser/components/urlbar/UrlbarProviderInterventions.jsm
 +++ b/browser/components/urlbar/UrlbarProviderInterventions.jsm
 @@ -486,6 +486,8 @@ class ProviderInterventions extends UrlbarProvider {
@@ -21,5 +21,5 @@ index d303da0f491b..644876e3e521 100644
        !queryContext.searchString ||
        !EN_LOCALE_MATCH.test(Services.locale.appLocaleAsBCP47) ||
 -- 
-2.29.2
+2.31.1
 

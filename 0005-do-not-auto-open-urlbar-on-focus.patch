@@ -1,18 +1,18 @@
-From 7077b4e3246bc37f6805dc4d196d14ccec6cc487 Mon Sep 17 00:00:00 2001
+From 52a38e42b894472515588b0de3d8f14b5ef642b9 Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
-Date: Mon, 14 Dec 2020 06:31:25 +0100
-Subject: [PATCH 5/8] do not auto-open urlbar on focus
+Date: Sat, 22 May 2021 15:38:47 +0200
+Subject: [PATCH 05/10] do not auto-open urlbar on focus
 
 ---
- browser/components/urlbar/UrlbarInput.jsm | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ browser/components/urlbar/UrlbarInput.jsm | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/browser/components/urlbar/UrlbarInput.jsm b/browser/components/urlbar/UrlbarInput.jsm
-index 989b1611afb1..f7f16d778b17 100644
+index 395edee91f59..4fd2bd103a40 100644
 --- a/browser/components/urlbar/UrlbarInput.jsm
 +++ b/browser/components/urlbar/UrlbarInput.jsm
-@@ -2754,7 +2754,8 @@ class UrlbarInput {
-     this.startLayoutExtend();
+@@ -2848,7 +2848,8 @@ class UrlbarInput {
+     }
  
      if (this.focusedViaMousedown) {
 -      this.view.autoOpen({ event });
@@ -21,16 +21,23 @@ index 989b1611afb1..f7f16d778b17 100644
      } else if (this.inputField.hasAttribute("refocused-by-panel")) {
        this._maybeSelectAll(true); // not sure what true here does
      }
-@@ -2821,7 +2822,8 @@ class UrlbarInput {
+@@ -2915,6 +2916,8 @@ class UrlbarInput {
            this._preventClickSelectsAll = true;
            this.search(UrlbarTokenizer.RESTRICT.SEARCH);
          } else {
--          this.view.autoOpen({ event });
 +          console.log("[UrlbarInput autoOpen] haha no thanks");
-+          //this.view.autoOpen({ event });
++          /*
+           // Do not suppress the focus border if we are already focused. If we
+           // did, we'd hide the focus border briefly then show it again if the
+           // user has Top Sites disabled, creating a flashing effect.
+@@ -2922,6 +2925,7 @@ class UrlbarInput {
+             event,
+             suppressFocusBorder: !this.hasAttribute("focused"),
+           });
++          */
          }
          break;
        case this.dropmarker:
 -- 
-2.29.2
+2.31.1
 

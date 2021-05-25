@@ -1,7 +1,8 @@
-From c0d3d1c2e2035bfda3f5398a607ea3477f66d6fa Mon Sep 17 00:00:00 2001
+From b8c849ae6f6977fd25f89b8009fa8ebd20236dfe Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
-Date: Mon, 14 Dec 2020 06:27:54 +0100
-Subject: [PATCH 1/8] restore click-selection behaviour to urlbar and searchbar
+Date: Sat, 22 May 2021 15:30:12 +0200
+Subject: [PATCH 01/10] restore click-selection behaviour to urlbar and
+ searchbar
 
 * doubleclicking selects all
 * singleclicking selects nothing
@@ -11,10 +12,10 @@ Subject: [PATCH 1/8] restore click-selection behaviour to urlbar and searchbar
  2 files changed, 19 insertions(+), 6 deletions(-)
 
 diff --git a/browser/components/search/content/searchbar.js b/browser/components/search/content/searchbar.js
-index 1259fb5fe2e0..a77099d382e6 100644
+index 54c2e97443a8..71309a29fee4 100644
 --- a/browser/components/search/content/searchbar.js
 +++ b/browser/components/search/content/searchbar.js
-@@ -461,7 +461,8 @@
+@@ -455,7 +455,8 @@
          document.activeElement == this._textbox &&
          this._textbox.selectionStart == this._textbox.selectionEnd
        ) {
@@ -24,7 +25,7 @@ index 1259fb5fe2e0..a77099d382e6 100644
        }
      }
  
-@@ -562,6 +563,13 @@
+@@ -560,6 +561,13 @@
            // is text in the textbox.
            this.openSuggestionsPanel(true);
          }
@@ -39,10 +40,10 @@ index 1259fb5fe2e0..a77099d382e6 100644
      }
  
 diff --git a/browser/components/urlbar/UrlbarInput.jsm b/browser/components/urlbar/UrlbarInput.jsm
-index d85494bb027d..964c06907c7a 100644
+index 73d15dff8e5b..516fd60afcd0 100644
 --- a/browser/components/urlbar/UrlbarInput.jsm
 +++ b/browser/components/urlbar/UrlbarInput.jsm
-@@ -2605,14 +2605,16 @@ class UrlbarInput {
+@@ -2687,14 +2687,16 @@ class UrlbarInput {
     * Determines if we should select all the text in the Urlbar based on the
     *  Urlbar state, and whether the selection is empty.
     */
@@ -61,7 +62,7 @@ index d85494bb027d..964c06907c7a 100644
      }
    }
  
-@@ -2718,7 +2720,7 @@ class UrlbarInput {
+@@ -2810,7 +2812,7 @@ class UrlbarInput {
        return;
      }
  
@@ -70,7 +71,7 @@ index d85494bb027d..964c06907c7a 100644
    }
  
    _on_focus(event) {
-@@ -2751,7 +2753,7 @@ class UrlbarInput {
+@@ -2845,7 +2847,7 @@ class UrlbarInput {
      if (this.focusedViaMousedown) {
        this.view.autoOpen({ event });
      } else if (this.inputField.hasAttribute("refocused-by-panel")) {
@@ -79,7 +80,7 @@ index d85494bb027d..964c06907c7a 100644
      }
  
      this._updateUrlTooltip();
-@@ -2809,7 +2811,10 @@ class UrlbarInput {
+@@ -2903,7 +2905,10 @@ class UrlbarInput {
            this.selectionStart = this.selectionEnd = 0;
          }
  
@@ -92,5 +93,5 @@ index d85494bb027d..964c06907c7a 100644
            this.search(UrlbarTokenizer.RESTRICT.SEARCH);
          } else {
 -- 
-2.29.2
+2.31.1
 
