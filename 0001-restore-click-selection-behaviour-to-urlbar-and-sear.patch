@@ -1,6 +1,6 @@
-From 7885a80370e1735b76b29203f46382f356d717a2 Mon Sep 17 00:00:00 2001
+From c0099ebed8a782deabfffa2131576b50949ae1b6 Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
-Date: Fri, 17 Dec 2021 13:13:56 +0100
+Date: Fri, 17 Dec 2021 15:36:08 +0100
 Subject: [PATCH 01/10] restore click-selection behaviour to urlbar and
  searchbar
 
@@ -12,7 +12,7 @@ Subject: [PATCH 01/10] restore click-selection behaviour to urlbar and
  2 files changed, 19 insertions(+), 6 deletions(-)
 
 diff --git a/browser/components/search/content/searchbar.js b/browser/components/search/content/searchbar.js
-index 54c2e97443a8..71309a29fee4 100644
+index 4cb7a57a3bd5..880cfc626530 100644
 --- a/browser/components/search/content/searchbar.js
 +++ b/browser/components/search/content/searchbar.js
 @@ -455,7 +455,8 @@
@@ -40,10 +40,10 @@ index 54c2e97443a8..71309a29fee4 100644
      }
  
 diff --git a/browser/components/urlbar/UrlbarInput.jsm b/browser/components/urlbar/UrlbarInput.jsm
-index 4c4207106b38..277c15502ac1 100644
+index 4e1ccac6bd17..420ff49a09e3 100644
 --- a/browser/components/urlbar/UrlbarInput.jsm
 +++ b/browser/components/urlbar/UrlbarInput.jsm
-@@ -2709,14 +2709,16 @@ class UrlbarInput {
+@@ -2672,14 +2672,16 @@ class UrlbarInput {
     * Determines if we should select all the text in the Urlbar based on the
     *  Urlbar state, and whether the selection is empty.
     */
@@ -62,7 +62,7 @@ index 4c4207106b38..277c15502ac1 100644
      }
    }
  
-@@ -2836,7 +2838,7 @@ class UrlbarInput {
+@@ -2794,7 +2796,7 @@ class UrlbarInput {
        return;
      }
  
@@ -71,7 +71,7 @@ index 4c4207106b38..277c15502ac1 100644
    }
  
    _on_focus(event) {
-@@ -2871,7 +2873,7 @@ class UrlbarInput {
+@@ -2825,7 +2827,7 @@ class UrlbarInput {
      if (this.focusedViaMousedown) {
        this.view.autoOpen({ event });
      } else if (this.inputField.hasAttribute("refocused-by-panel")) {
@@ -80,7 +80,7 @@ index 4c4207106b38..277c15502ac1 100644
      }
  
      this._updateUrlTooltip();
-@@ -2929,7 +2931,10 @@ class UrlbarInput {
+@@ -2886,7 +2888,10 @@ class UrlbarInput {
            this.selectionStart = this.selectionEnd = 0;
          }
  

@@ -1,6 +1,6 @@
-From 7609f6fb7c7279c7279ee3926193bd39c849b376 Mon Sep 17 00:00:00 2001
+From 16dfcb351eaaefae5097e9f77b70d6f7dec15b01 Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
-Date: Fri, 17 Dec 2021 13:14:34 +0100
+Date: Fri, 17 Dec 2021 15:36:42 +0100
 Subject: [PATCH 02/10] hardcode to never strip https
 
 ---
