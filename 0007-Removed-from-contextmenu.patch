@@ -1,6 +1,6 @@
-From a860f3d88213c8ed215dbfefd2bde6367b5a819f Mon Sep 17 00:00:00 2001
+From f3939ebeda08412b1dbff042b6fb320f47549035 Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
-Date: Sat, 22 May 2021 17:12:00 +0200
+Date: Fri, 17 Dec 2021 13:32:01 +0100
 Subject: [PATCH 07/10] Removed from contextmenu:
 
 * email-image
@@ -8,22 +8,48 @@ Subject: [PATCH 07/10] Removed from contextmenu:
 * send-to-device
 * inspect accessibility
 * set background
+* pocket trash
 
 I do not use them. Countless times have I clicked email image, and
 occasionally I have accidentally saved a frame instead of saving the
 video itself.
 ---
- browser/base/content/browser-context.inc | 57 +++++-------------------
- 1 file changed, 10 insertions(+), 47 deletions(-)
+ browser/base/content/browser-context.inc | 61 ++++--------------------
+ 1 file changed, 10 insertions(+), 51 deletions(-)
 
 diff --git a/browser/base/content/browser-context.inc b/browser/base/content/browser-context.inc
-index 2b474f879e49..fa8feaf483aa 100644
+index ee0f14db4f27..186eee78128c 100644
 --- a/browser/base/content/browser-context.inc
 +++ b/browser/base/content/browser-context.inc
-@@ -172,18 +172,6 @@
+@@ -101,24 +101,12 @@
+       <menuitem id="context-savelink"
+                 data-l10n-id="main-context-menu-save-link"
+                 oncommand="gContextMenu.saveLink();"/>
+-      <menuitem id="context-savelinktopocket"
+-                data-l10n-id="main-context-menu-save-link-to-pocket"
+-                oncommand= "Pocket.savePage(gContextMenu.browser, gContextMenu.linkURL);"/>
+       <menuitem id="context-copyemail"
+                 data-l10n-id="main-context-menu-copy-email"
+                 oncommand="gContextMenu.copyEmail();"/>
+       <menuitem id="context-copylink"
+                 data-l10n-id="main-context-menu-copy-link-simple"
+                 oncommand="gContextMenu.copyLink();"/>
+-      <menu id="context-sendlinktodevice"
+-            class="sync-ui-item"
+-            data-l10n-id="main-context-menu-link-send-to-device"
+-            hidden="true">
+-            <menupopup id="context-sendlinktodevice-popup"
+-                  onpopupshowing="gSync.populateSendTabToDevicesMenu(event.target, gContextMenu.linkURL, gContextMenu.linkTextStr);"/>
+-      </menu>
+-      <menuseparator id="context-sep-sendlinktodevice" class="sync-ui-item"
+-                hidden="true"/>
+       <menuseparator id="context-sep-copylink"/>
+       <menuitem id="context-media-play"
+                 data-l10n-id="main-context-menu-media-play"
+@@ -193,18 +181,6 @@
+       <menuitem id="context-viewimage"
                  data-l10n-id="main-context-menu-image-view-new-tab"
-                 oncommand="gContextMenu.viewMedia(event);"
-                 onclick="checkForMiddleClick(this, event);"/>
+                 oncommand="gContextMenu.viewMedia(event);"/>
 -      <menuitem id="context-saveimage"
 -                data-l10n-id="main-context-menu-image-save-as"
 -                oncommand="gContextMenu.saveMedia();"/>
@@ -39,7 +65,7 @@ index 2b474f879e49..fa8feaf483aa 100644
  #ifdef CONTEXT_COPY_IMAGE_CONTENTS
        <menuitem id="context-copyimage-contents"
                  data-l10n-id="main-context-menu-image-copy"
-@@ -198,23 +186,20 @@
+@@ -219,15 +195,16 @@
        <menuitem id="context-copyaudiourl"
                  data-l10n-id="main-context-menu-audio-copy-link"
                  oncommand="gContextMenu.copyMediaLocation();"/>
@@ -62,10 +88,13 @@ index 2b474f879e49..fa8feaf483aa 100644
 +      <menuitem id="context-saveaudio"
 +                data-l10n-id="main-context-menu-audio-save-as"
 +                oncommand="gContextMenu.saveMedia();"/>
+       <menuitem id="context-viewimageinfo"
+                 hidden="true"
+                 data-l10n-id="main-context-menu-image-info"
+@@ -235,10 +212,6 @@
        <menuitem id="context-viewimagedesc"
                  data-l10n-id="main-context-menu-image-desc"
-                 oncommand="gContextMenu.viewImageDesc(event);"
-                 onclick="checkForMiddleClick(this, event);"/>
+                 oncommand="gContextMenu.viewImageDesc(event);"/>
 -      <menuseparator id="context-sep-setbackground"/>
 -      <menuitem id="context-setDesktopBackground"
 -                data-l10n-id="main-context-menu-image-set-image-as-background"
@@ -73,12 +102,13 @@ index 2b474f879e49..fa8feaf483aa 100644
        <menuitem id="context-ctp-play"
                  data-l10n-id="main-context-menu-plugin-play"
                  oncommand="gContextMenu.playPlugin();"/>
-@@ -228,15 +213,6 @@
-       <menuitem id="context-pocket"
-                 data-l10n-id="main-context-menu-save-to-pocket"
-                 oncommand="Pocket.savePage(gContextMenu.browser, gContextMenu.browser.currentURI.spec, gContextMenu.browser.contentTitle);"/>
--      <menuseparator id="context-sep-sendpagetodevice" class="sync-ui-item"
--                     hidden="true"/>
+@@ -254,16 +227,6 @@
+       <menuitem id="context-savepage"
+                 data-l10n-id="main-context-menu-page-save"
+                 oncommand="gContextMenu.savePageAs();"/>
+-      <menuitem id="context-pocket"
+-                data-l10n-id="main-context-menu-save-to-pocket"
+-                oncommand="Pocket.savePage(gContextMenu.browser, gContextMenu.browser.currentURI.spec, gContextMenu.browser.contentTitle);"/>
 -      <menu id="context-sendpagetodevice"
 -            class="sync-ui-item"
 -            data-l10n-id="main-context-menu-send-to-device"
@@ -89,23 +119,7 @@ index 2b474f879e49..fa8feaf483aa 100644
        <menu id="fill-login" hidden="true">
          <menupopup id="fill-login-popup" />
        </menu>
-@@ -274,15 +250,6 @@
-       <menuitem id="context-print-selection"
-                 data-l10n-id="main-context-menu-print-selection"
-                 oncommand="gContextMenu.printSelection();"/>
--      <menuseparator id="context-sep-sendlinktodevice" class="sync-ui-item"
--                hidden="true"/>
--      <menu id="context-sendlinktodevice"
--            class="sync-ui-item"
--            data-l10n-id="main-context-menu-link-send-to-device"
--            hidden="true">
--        <menupopup id="context-sendlinktodevice-popup"
--                   onpopupshowing="gSync.populateSendTabToDevicesMenu(event.target, gContextMenu.linkURL, gContextMenu.linkTextStr);"/>
--      </menu>
-       <menuseparator id="context-sep-selectall"/>
-       <menuitem id="context-keywordfield"
-                 data-l10n-id="main-context-menu-keyword"
-@@ -374,10 +341,6 @@
+@@ -390,10 +353,6 @@
        <menuitem id="context-viewsource"
                  data-l10n-id="main-context-menu-view-page-source"
                  oncommand="BrowserViewSource(gContextMenu.browser);"/>
@@ -117,5 +131,5 @@ index 2b474f879e49..fa8feaf483aa 100644
                  hidden="true"
                  data-l10n-id="main-context-menu-inspect"
 -- 
-2.31.1
+2.34.1
 

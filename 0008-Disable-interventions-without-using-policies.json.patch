@@ -1,6 +1,6 @@
-From 2978419e9afa5f5cda2d027d3e0d6119b79eaeaf Mon Sep 17 00:00:00 2001
+From 0b01116a4bbf8b35c0ce710c90ece3976aa846ef Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
-Date: Sat, 22 May 2021 17:13:35 +0200
+Date: Fri, 17 Dec 2021 14:52:06 +0100
 Subject: [PATCH 08/10] Disable interventions (without using policies.json)
 
 ---
@@ -21,5 +21,5 @@ index e22886ce9261..d005e8e7eb16 100644
        !queryContext.searchString ||
        !EN_LOCALE_MATCH.test(Services.locale.appLocaleAsBCP47) ||
 -- 
-2.31.1
+2.34.1
 

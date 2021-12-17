@@ -1,6 +1,6 @@
-From b8c849ae6f6977fd25f89b8009fa8ebd20236dfe Mon Sep 17 00:00:00 2001
+From 7885a80370e1735b76b29203f46382f356d717a2 Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
-Date: Sat, 22 May 2021 15:30:12 +0200
+Date: Fri, 17 Dec 2021 13:13:56 +0100
 Subject: [PATCH 01/10] restore click-selection behaviour to urlbar and
  searchbar
 
@@ -40,10 +40,10 @@ index 54c2e97443a8..71309a29fee4 100644
      }
  
 diff --git a/browser/components/urlbar/UrlbarInput.jsm b/browser/components/urlbar/UrlbarInput.jsm
-index 73d15dff8e5b..516fd60afcd0 100644
+index 4c4207106b38..277c15502ac1 100644
 --- a/browser/components/urlbar/UrlbarInput.jsm
 +++ b/browser/components/urlbar/UrlbarInput.jsm
-@@ -2687,14 +2687,16 @@ class UrlbarInput {
+@@ -2709,14 +2709,16 @@ class UrlbarInput {
     * Determines if we should select all the text in the Urlbar based on the
     *  Urlbar state, and whether the selection is empty.
     */
@@ -62,7 +62,7 @@ index 73d15dff8e5b..516fd60afcd0 100644
      }
    }
  
-@@ -2810,7 +2812,7 @@ class UrlbarInput {
+@@ -2836,7 +2838,7 @@ class UrlbarInput {
        return;
      }
  
@@ -71,7 +71,7 @@ index 73d15dff8e5b..516fd60afcd0 100644
    }
  
    _on_focus(event) {
-@@ -2845,7 +2847,7 @@ class UrlbarInput {
+@@ -2871,7 +2873,7 @@ class UrlbarInput {
      if (this.focusedViaMousedown) {
        this.view.autoOpen({ event });
      } else if (this.inputField.hasAttribute("refocused-by-panel")) {
@@ -80,7 +80,7 @@ index 73d15dff8e5b..516fd60afcd0 100644
      }
  
      this._updateUrlTooltip();
-@@ -2903,7 +2905,10 @@ class UrlbarInput {
+@@ -2929,7 +2931,10 @@ class UrlbarInput {
            this.selectionStart = this.selectionEnd = 0;
          }
  
@@ -93,5 +93,5 @@ index 73d15dff8e5b..516fd60afcd0 100644
            this.search(UrlbarTokenizer.RESTRICT.SEARCH);
          } else {
 -- 
-2.31.1
+2.34.1
 

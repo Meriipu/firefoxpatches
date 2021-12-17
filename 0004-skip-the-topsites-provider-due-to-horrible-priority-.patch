@@ -1,6 +1,6 @@
-From 82221b4692562a7a7d9f82f0b79d714c96092cb8 Mon Sep 17 00:00:00 2001
+From 22476f8a5fc4312a3de9c9965cb509c86a1a786d Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
-Date: Sat, 22 May 2021 15:35:27 +0200
+Date: Fri, 17 Dec 2021 13:15:40 +0100
 Subject: [PATCH 04/10] skip the topsites provider due to horrible
  priority-stealing behaviour
 
@@ -13,10 +13,10 @@ nothing.
  1 file changed, 7 insertions(+)
 
 diff --git a/browser/components/urlbar/UrlbarProvidersManager.jsm b/browser/components/urlbar/UrlbarProvidersManager.jsm
-index 22ce3ce77012..c043b3817b29 100644
+index 36fdec9676d1..c5260d003fd0 100644
 --- a/browser/components/urlbar/UrlbarProvidersManager.jsm
 +++ b/browser/components/urlbar/UrlbarProvidersManager.jsm
-@@ -369,6 +369,13 @@ class Query {
+@@ -370,6 +370,13 @@ class Query {
        //     return;
        //   }
        provider.queryInstance = this;
@@ -31,5 +31,5 @@ index 22ce3ce77012..c043b3817b29 100644
          // Not all isActive implementations are async, so wrap the call in a
          // promise so we can be sure we can call `then` on it.  Note that
 -- 
-2.31.1
+2.34.1
 

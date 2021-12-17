@@ -1,6 +1,6 @@
-From 9087eb5d221a3aab784e7cabb23f137b894e6eda Mon Sep 17 00:00:00 2001
+From 7609f6fb7c7279c7279ee3926193bd39c849b376 Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
-Date: Sat, 22 May 2021 15:34:17 +0200
+Date: Fri, 17 Dec 2021 13:14:34 +0100
 Subject: [PATCH 02/10] hardcode to never strip https
 
 ---
@@ -8,10 +8,10 @@ Subject: [PATCH 02/10] hardcode to never strip https
  1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/browser/components/urlbar/UrlbarResult.jsm b/browser/components/urlbar/UrlbarResult.jsm
-index 8848d95c4873..281dfe4c1b34 100644
+index 5b1716b79674..67611999ce87 100644
 --- a/browser/components/urlbar/UrlbarResult.jsm
 +++ b/browser/components/urlbar/UrlbarResult.jsm
-@@ -233,7 +233,11 @@ class UrlbarResult {
+@@ -239,7 +239,11 @@ class UrlbarResult {
        // For display purposes we need to unescape the url.
        payloadInfo.displayUrl = [...payloadInfo.url];
        let url = payloadInfo.displayUrl[0];
@@ -25,5 +25,5 @@ index 8848d95c4873..281dfe4c1b34 100644
          if (url.startsWith("https://")) {
            url = url.substring(8);
 -- 
-2.31.1
+2.34.1
 
