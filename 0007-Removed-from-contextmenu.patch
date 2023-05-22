@@ -1,4 +1,4 @@
-From 96a32d952d4014df0831cfb1f3a1fd8e4bedfb6d Mon Sep 17 00:00:00 2001
+From f4c146e0ef133d65a7e221fdd5d181fcc0b8e26b Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
 Date: Fri, 17 Dec 2021 16:02:05 +0100
 Subject: [PATCH 07/10] Removed from contextmenu:
@@ -18,10 +18,10 @@ video itself.
  1 file changed, 10 insertions(+), 51 deletions(-)
 
 diff --git a/browser/base/content/browser-context.inc b/browser/base/content/browser-context.inc
-index 03799874d5b2..a76d5116488f 100644
+index 438efc5cd610..133f55da3e7d 100644
 --- a/browser/base/content/browser-context.inc
 +++ b/browser/base/content/browser-context.inc
-@@ -101,24 +101,12 @@
+@@ -100,9 +100,6 @@
        <menuitem id="context-savelink"
                  data-l10n-id="main-context-menu-save-link"
                  oncommand="gContextMenu.saveLink();"/>
@@ -31,6 +31,7 @@ index 03799874d5b2..a76d5116488f 100644
        <menuitem id="context-copyemail"
                  data-l10n-id="main-context-menu-copy-email"
                  oncommand="gContextMenu.copyEmail();"/>
+@@ -112,15 +109,6 @@
        <menuitem id="context-copylink"
                  data-l10n-id="main-context-menu-copy-link-simple"
                  oncommand="gContextMenu.copyLink();"/>
@@ -46,7 +47,7 @@ index 03799874d5b2..a76d5116488f 100644
        <menuseparator id="context-sep-copylink"/>
        <menuitem id="context-media-play"
                  data-l10n-id="main-context-menu-media-play"
-@@ -193,18 +181,6 @@
+@@ -195,18 +183,6 @@
        <menuitem id="context-viewimage"
                  data-l10n-id="main-context-menu-image-view-new-tab"
                  oncommand="gContextMenu.viewMedia(event);"/>
@@ -65,7 +66,7 @@ index 03799874d5b2..a76d5116488f 100644
  #ifdef CONTEXT_COPY_IMAGE_CONTENTS
        <menuitem id="context-copyimage-contents"
                  data-l10n-id="main-context-menu-image-copy"
-@@ -219,15 +195,16 @@
+@@ -221,15 +197,16 @@
        <menuitem id="context-copyaudiourl"
                  data-l10n-id="main-context-menu-audio-copy-link"
                  oncommand="gContextMenu.copyMediaLocation();"/>
@@ -91,7 +92,7 @@ index 03799874d5b2..a76d5116488f 100644
        <menuitem id="context-viewimageinfo"
                  hidden="true"
                  data-l10n-id="main-context-menu-image-info"
-@@ -235,10 +212,6 @@
+@@ -237,10 +214,6 @@
        <menuitem id="context-viewimagedesc"
                  data-l10n-id="main-context-menu-image-desc"
                  oncommand="gContextMenu.viewImageDesc(event);"/>
@@ -102,7 +103,7 @@ index 03799874d5b2..a76d5116488f 100644
        <menuitem id="context-ctp-play"
                  data-l10n-id="main-context-menu-plugin-play"
                  oncommand="gContextMenu.playPlugin();"/>
-@@ -254,16 +227,6 @@
+@@ -256,16 +229,6 @@
        <menuitem id="context-savepage"
                  data-l10n-id="main-context-menu-page-save"
                  oncommand="gContextMenu.savePageAs();"/>
@@ -119,7 +120,7 @@ index 03799874d5b2..a76d5116488f 100644
        <menu id="fill-login" hidden="true">
          <menupopup id="fill-login-popup" />
        </menu>
-@@ -394,10 +357,6 @@
+@@ -396,10 +359,6 @@
        <menuitem id="context-viewsource"
                  data-l10n-id="main-context-menu-view-page-source"
                  oncommand="BrowserViewSource(gContextMenu.browser);"/>
@@ -131,5 +132,5 @@ index 03799874d5b2..a76d5116488f 100644
                  hidden="true"
                  data-l10n-id="main-context-menu-inspect"
 -- 
-2.34.1
+2.38.0
 

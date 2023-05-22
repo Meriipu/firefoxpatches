@@ -1,22 +1,22 @@
-From bbb594ff4da4ac230e79e3117660654dbcbf0de0 Mon Sep 17 00:00:00 2001
+From f713d4c73b31ab2cb2acef56b8492d1ad4f81db7 Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
 Date: Fri, 17 Dec 2021 16:09:47 +0100
 Subject: [PATCH 10/10] one-offs: display: none
 
 ---
- browser/base/content/browser.css                     | 12 ++++++++++++
- browser/components/urlbar/UrlbarInput.jsm            |  3 ++-
- .../components/urlbar/UrlbarProviderTabToSearch.jsm  |  4 ++++
- browser/components/urlbar/UrlbarSearchOneOffs.jsm    |  7 ++++++-
- browser/components/urlbar/UrlbarView.jsm             |  2 +-
- 5 files changed, 25 insertions(+), 3 deletions(-)
+ browser/base/content/browser.css                      | 11 +++++++++++
+ browser/components/urlbar/UrlbarInput.jsm             |  3 ++-
+ .../components/urlbar/UrlbarProviderTabToSearch.jsm   |  4 ++++
+ browser/components/urlbar/UrlbarSearchOneOffs.jsm     |  7 ++++++-
+ browser/components/urlbar/UrlbarView.jsm              |  2 +-
+ 5 files changed, 24 insertions(+), 3 deletions(-)
 
 diff --git a/browser/base/content/browser.css b/browser/base/content/browser.css
-index 8d8abf5e8b59..229454751d18 100644
+index 24013f36b4e7..91f419a9f511 100644
 --- a/browser/base/content/browser.css
 +++ b/browser/base/content/browser.css
-@@ -94,6 +94,18 @@ body {
-   }
+@@ -98,6 +98,17 @@ body {
+   -moz-window-dragging: drag;
  }
  
 +.search-one-offs[compact=true] .search-setting-button,
@@ -30,12 +30,11 @@ index 8d8abf5e8b59..229454751d18 100644
 +  display: none !important;
 +}
 +
-+
- %ifdef MENUBAR_CAN_AUTOHIDE
  #toolbar-menubar[autohide="true"] {
    overflow: hidden;
+ }
 diff --git a/browser/components/urlbar/UrlbarInput.jsm b/browser/components/urlbar/UrlbarInput.jsm
-index 2f6bbc481115..dd6c2f3ac4d6 100644
+index b0ae70e859b1..ba15084d9eab 100644
 --- a/browser/components/urlbar/UrlbarInput.jsm
 +++ b/browser/components/urlbar/UrlbarInput.jsm
 @@ -86,7 +86,8 @@ class UrlbarInput {
@@ -49,7 +48,7 @@ index 2f6bbc481115..dd6c2f3ac4d6 100644
        `)
      );
 diff --git a/browser/components/urlbar/UrlbarProviderTabToSearch.jsm b/browser/components/urlbar/UrlbarProviderTabToSearch.jsm
-index cd3e042942d8..2c83585a18f9 100644
+index 8b4e26d57dd6..8354555cd646 100644
 --- a/browser/components/urlbar/UrlbarProviderTabToSearch.jsm
 +++ b/browser/components/urlbar/UrlbarProviderTabToSearch.jsm
 @@ -133,12 +133,16 @@ class ProviderTabToSearch extends UrlbarProvider {
@@ -70,7 +69,7 @@ index cd3e042942d8..2c83585a18f9 100644
  
    /**
 diff --git a/browser/components/urlbar/UrlbarSearchOneOffs.jsm b/browser/components/urlbar/UrlbarSearchOneOffs.jsm
-index 5da5ae150407..c25938570641 100644
+index 6eb547ece841..59f55ff68376 100644
 --- a/browser/components/urlbar/UrlbarSearchOneOffs.jsm
 +++ b/browser/components/urlbar/UrlbarSearchOneOffs.jsm
 @@ -66,6 +66,8 @@ class UrlbarSearchOneOffs extends SearchOneOffs {
@@ -98,10 +97,10 @@ index 5da5ae150407..c25938570641 100644
  
    /**
 diff --git a/browser/components/urlbar/UrlbarView.jsm b/browser/components/urlbar/UrlbarView.jsm
-index 2c6f4a6eca27..38a7e1601879 100644
+index e55937ce372e..c784b42f1260 100644
 --- a/browser/components/urlbar/UrlbarView.jsm
 +++ b/browser/components/urlbar/UrlbarView.jsm
-@@ -609,7 +609,7 @@ class UrlbarView {
+@@ -623,7 +623,7 @@ class UrlbarView {
      let openPanelInstance = (this._openPanelInstance = {});
      this.oneOffSearchButtons.willHide().then(willHide => {
        if (!willHide && openPanelInstance == this._openPanelInstance) {
@@ -111,5 +110,5 @@ index 2c6f4a6eca27..38a7e1601879 100644
        }
      });
 -- 
-2.34.1
+2.38.0
 

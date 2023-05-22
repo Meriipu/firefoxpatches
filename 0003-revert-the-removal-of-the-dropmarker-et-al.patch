@@ -1,4 +1,4 @@
-From 69addbc16d05daf02bf5f9a4ddd3262158517b1c Mon Sep 17 00:00:00 2001
+From 6381c9e2e921f66bab46ce7bb62146cf0e2786f6 Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
 Date: Fri, 17 Dec 2021 15:55:13 +0100
 Subject: [PATCH 03/10] revert the removal of the dropmarker et al.
@@ -12,14 +12,14 @@ the dropmarker back cosmetically.
  .../base/content/navigator-toolbox.inc.xhtml  |  3 +++
  browser/components/urlbar/UrlbarInput.jsm     | 19 +++++++++++++++
  browser/components/urlbar/UrlbarView.jsm      |  3 +++
- .../themes/shared/urlbar-searchbar.inc.css    | 24 +++++++++++++++++++
+ browser/themes/shared/urlbar-searchbar.css    | 24 +++++++++++++++++++
  5 files changed, 50 insertions(+)
 
 diff --git a/browser/base/content/browser.css b/browser/base/content/browser.css
-index 2d74162b1543..8d8abf5e8b59 100644
+index 03a778809dc8..24013f36b4e7 100644
 --- a/browser/base/content/browser.css
 +++ b/browser/base/content/browser.css
-@@ -730,6 +730,7 @@ toolbar:not(#TabsToolbar) > #personal-bookmarks {
+@@ -706,6 +706,7 @@ toolbar:not(#TabsToolbar) > #personal-bookmarks {
  #urlbar-input-container[pageproxystate=invalid] > #page-action-buttons > .urlbar-page-action,
  #identity-box.chromeUI ~ #page-action-buttons > .urlbar-page-action:not(#star-button-box),
  #urlbar[usertyping] > #urlbar-input-container > #page-action-buttons > #urlbar-zoom-button,
@@ -28,10 +28,10 @@ index 2d74162b1543..8d8abf5e8b59 100644
  #urlbar:not([focused]) > #urlbar-input-container > #urlbar-go-button {
    display: none;
 diff --git a/browser/base/content/navigator-toolbox.inc.xhtml b/browser/base/content/navigator-toolbox.inc.xhtml
-index 02636a6b46b5..d683e3e6504d 100644
+index 316d3ef98371..77f7d2e3daba 100644
 --- a/browser/base/content/navigator-toolbox.inc.xhtml
 +++ b/browser/base/content/navigator-toolbox.inc.xhtml
-@@ -328,6 +328,9 @@
+@@ -321,6 +321,9 @@
                     class="urlbar-icon"
                     onclick="gURLBar.handleCommand(event);"
                     data-l10n-id="urlbar-go-button"/>
@@ -42,7 +42,7 @@ index 02636a6b46b5..d683e3e6504d 100644
                <toolbartabstop/>
                <hbox id="contextual-feature-recommendation" role="button" hidden="true">
 diff --git a/browser/components/urlbar/UrlbarInput.jsm b/browser/components/urlbar/UrlbarInput.jsm
-index 420ff49a09e3..33130d51054a 100644
+index c57889efac6e..ea07ffad2043 100644
 --- a/browser/components/urlbar/UrlbarInput.jsm
 +++ b/browser/components/urlbar/UrlbarInput.jsm
 @@ -182,6 +182,8 @@ class UrlbarInput {
@@ -54,7 +54,7 @@ index 420ff49a09e3..33130d51054a 100644
      this._inputContainer = this.querySelector("#urlbar-input-container");
      this._identityBox = this.querySelector("#identity-box");
      this._searchModeIndicator = this.querySelector(
-@@ -240,6 +242,7 @@ class UrlbarInput {
+@@ -241,6 +243,7 @@ class UrlbarInput {
        this.addEventListener(name, this);
      }
  
@@ -62,7 +62,7 @@ index 420ff49a09e3..33130d51054a 100644
      this.window.addEventListener("mousedown", this);
      if (AppConstants.platform == "win") {
        this.window.addEventListener("draggableregionleftmousedown", this);
-@@ -2904,6 +2907,22 @@ class UrlbarInput {
+@@ -3046,6 +3049,22 @@ class UrlbarInput {
            });
          }
          break;
@@ -86,10 +86,10 @@ index 420ff49a09e3..33130d51054a 100644
          if (this._mousedownOnUrlbarDescendant) {
            this._mousedownOnUrlbarDescendant = false;
 diff --git a/browser/components/urlbar/UrlbarView.jsm b/browser/components/urlbar/UrlbarView.jsm
-index 428c9e370a98..2c6f4a6eca27 100644
+index 6d26bb276681..e55937ce372e 100644
 --- a/browser/components/urlbar/UrlbarView.jsm
 +++ b/browser/components/urlbar/UrlbarView.jsm
-@@ -462,6 +462,8 @@ class UrlbarView {
+@@ -463,6 +463,8 @@ class UrlbarView {
      this._openPanelInstance = null;
      this._previousTabToSearchEngine = null;
  
@@ -98,7 +98,7 @@ index 428c9e370a98..2c6f4a6eca27 100644
      this.input.removeAttribute("open");
      this.input.endLayoutExtend();
  
-@@ -871,6 +873,7 @@ class UrlbarView {
+@@ -890,6 +892,7 @@ class UrlbarView {
      this._enableOrDisableRowWrap();
  
      this.input.inputField.setAttribute("aria-expanded", "true");
@@ -106,11 +106,11 @@ index 428c9e370a98..2c6f4a6eca27 100644
  
      this.input.toggleAttribute("suppress-focus-border", true);
      this.input.setAttribute("open", "true");
-diff --git a/browser/themes/shared/urlbar-searchbar.inc.css b/browser/themes/shared/urlbar-searchbar.inc.css
-index 82675dae2041..eba08d805e0d 100644
---- a/browser/themes/shared/urlbar-searchbar.inc.css
-+++ b/browser/themes/shared/urlbar-searchbar.inc.css
-@@ -453,6 +453,19 @@
+diff --git a/browser/themes/shared/urlbar-searchbar.css b/browser/themes/shared/urlbar-searchbar.css
+index e406f8d26d2c..554cf7b2f3af 100644
+--- a/browser/themes/shared/urlbar-searchbar.css
++++ b/browser/themes/shared/urlbar-searchbar.css
+@@ -427,6 +427,19 @@
    transform: scaleX(-1);
  }
  
@@ -130,7 +130,7 @@ index 82675dae2041..eba08d805e0d 100644
  #pageActionButton,
  .share-more-button {
    list-style-image: url("chrome://global/skin/icons/more.svg");
-@@ -572,6 +585,17 @@
+@@ -546,6 +559,17 @@
    mask-position-x: 0;
  }
  
@@ -149,5 +149,5 @@ index 82675dae2041..eba08d805e0d 100644
  #urlbar[cfr-recommendation-state] #urlbar-input {
    /* A mask-image is usually only defined for the url bar when text overflows.
 -- 
-2.34.1
+2.38.0
 

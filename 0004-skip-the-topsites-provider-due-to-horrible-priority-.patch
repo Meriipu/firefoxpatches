@@ -1,4 +1,4 @@
-From d2e8ad828eef1072c406c086ea3ed463856b7294 Mon Sep 17 00:00:00 2001
+From 2d33334bd44b0c186cf8d9b2aae4f680772c07f2 Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
 Date: Fri, 17 Dec 2021 16:00:22 +0100
 Subject: [PATCH 04/10] skip the topsites provider due to horrible
@@ -13,7 +13,7 @@ nothing.
  1 file changed, 7 insertions(+)
 
 diff --git a/browser/components/urlbar/UrlbarProvidersManager.jsm b/browser/components/urlbar/UrlbarProvidersManager.jsm
-index 1517ebd86a34..be59628109a1 100644
+index e05eda3fb296..78eb057e7b3b 100644
 --- a/browser/components/urlbar/UrlbarProvidersManager.jsm
 +++ b/browser/components/urlbar/UrlbarProvidersManager.jsm
 @@ -381,6 +381,13 @@ class Query {
@@ -31,5 +31,5 @@ index 1517ebd86a34..be59628109a1 100644
          // Not all isActive implementations are async, so wrap the call in a
          // promise so we can be sure we can call `then` on it.  Note that
 -- 
-2.34.1
+2.38.0
 

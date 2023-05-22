@@ -1,4 +1,4 @@
-From aa20f44cb24be6aaf06a1bc4244c0366a0f66977 Mon Sep 17 00:00:00 2001
+From 3b8f63cb94567974812f187f6afab263e9b4f83c Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
 Date: Fri, 17 Dec 2021 16:01:38 +0100
 Subject: [PATCH 06/10] A minimum tab width IS a minimum tab width
@@ -9,10 +9,10 @@ what is the point of the pref otherwise
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/browser/base/content/tabbrowser-tabs.js b/browser/base/content/tabbrowser-tabs.js
-index c173fbd83a9a..5a01465510de 100644
+index 9f79772fa162..9f382c83b9ac 100644
 --- a/browser/base/content/tabbrowser-tabs.js
 +++ b/browser/base/content/tabbrowser-tabs.js
-@@ -107,7 +107,8 @@
+@@ -106,7 +106,8 @@
          null,
          (pref, prevValue, newValue) => (this._tabMinWidth = newValue),
          newValue => {
@@ -23,5 +23,5 @@ index c173fbd83a9a..5a01465510de 100644
          }
        );
 -- 
-2.34.1
+2.38.0
 
