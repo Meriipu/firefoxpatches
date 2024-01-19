@@ -1,4 +1,4 @@
-From f4c146e0ef133d65a7e221fdd5d181fcc0b8e26b Mon Sep 17 00:00:00 2001
+From abb32bd219d6c4bfad273b5e3a140adf6fdd9f4a Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
 Date: Fri, 17 Dec 2021 16:02:05 +0100
 Subject: [PATCH 07/10] Removed from contextmenu:
@@ -14,14 +14,14 @@ I do not use them. Countless times have I clicked email image, and
 occasionally I have accidentally saved a frame instead of saving the
 video itself.
 ---
- browser/base/content/browser-context.inc | 61 ++++--------------------
- 1 file changed, 10 insertions(+), 51 deletions(-)
+ browser/base/content/browser-context.inc | 66 ++++--------------------
+ 1 file changed, 10 insertions(+), 56 deletions(-)
 
 diff --git a/browser/base/content/browser-context.inc b/browser/base/content/browser-context.inc
-index 438efc5cd610..133f55da3e7d 100644
+index 6ca8d7ebaa7f..7ffdd2fa9113 100644
 --- a/browser/base/content/browser-context.inc
 +++ b/browser/base/content/browser-context.inc
-@@ -100,9 +100,6 @@
+@@ -105,9 +105,6 @@
        <menuitem id="context-savelink"
                  data-l10n-id="main-context-menu-save-link"
                  oncommand="gContextMenu.saveLink();"/>
@@ -31,23 +31,27 @@ index 438efc5cd610..133f55da3e7d 100644
        <menuitem id="context-copyemail"
                  data-l10n-id="main-context-menu-copy-email"
                  oncommand="gContextMenu.copyEmail();"/>
-@@ -112,15 +109,6 @@
+@@ -117,19 +114,6 @@
        <menuitem id="context-copylink"
                  data-l10n-id="main-context-menu-copy-link-simple"
                  oncommand="gContextMenu.copyLink();"/>
+-      <menuitem id="context-stripOnShareLink"
+-                data-l10n-id="main-context-menu-strip-on-share-link"
+-                hidden="true"
+-                oncommand="gContextMenu.copyStrippedLink();"/>
 -      <menu id="context-sendlinktodevice"
 -            class="sync-ui-item"
 -            data-l10n-id="main-context-menu-link-send-to-device"
 -            hidden="true">
 -            <menupopup id="context-sendlinktodevice-popup"
--                  onpopupshowing="gSync.populateSendTabToDevicesMenu(event.target, gContextMenu.linkURL, gContextMenu.linkTextStr);"/>
+-                  onpopupshowing="gSync.populateSendTabToDevicesMenu(event.target, gContextMenu.linkURI, gContextMenu.linkTextStr);"/>
 -      </menu>
 -      <menuseparator id="context-sep-sendlinktodevice" class="sync-ui-item"
 -                hidden="true"/>
        <menuseparator id="context-sep-copylink"/>
        <menuitem id="context-media-play"
                  data-l10n-id="main-context-menu-media-play"
-@@ -195,18 +183,6 @@
+@@ -204,18 +188,6 @@
        <menuitem id="context-viewimage"
                  data-l10n-id="main-context-menu-image-view-new-tab"
                  oncommand="gContextMenu.viewMedia(event);"/>
@@ -66,7 +70,7 @@ index 438efc5cd610..133f55da3e7d 100644
  #ifdef CONTEXT_COPY_IMAGE_CONTENTS
        <menuitem id="context-copyimage-contents"
                  data-l10n-id="main-context-menu-image-copy"
-@@ -221,15 +197,16 @@
+@@ -230,18 +202,19 @@
        <menuitem id="context-copyaudiourl"
                  data-l10n-id="main-context-menu-audio-copy-link"
                  oncommand="gContextMenu.copyMediaLocation();"/>
@@ -79,6 +83,9 @@ index 438efc5cd610..133f55da3e7d 100644
 -      <menuitem id="context-sendaudio"
 -                data-l10n-id="main-context-menu-audio-email"
 -                oncommand="gContextMenu.sendMedia();"/>
+       <menuitem id="context-imagetext"
+                 data-l10n-id="main-context-menu-image-copy-text"
+                 oncommand="gContextMenu.getImageText()"/>
 +      <menuseparator id="context-sep-copyimage"/>
 +      <menuitem id="context-saveimage"
 +                data-l10n-id="main-context-menu-image-save-as"
@@ -92,7 +99,7 @@ index 438efc5cd610..133f55da3e7d 100644
        <menuitem id="context-viewimageinfo"
                  hidden="true"
                  data-l10n-id="main-context-menu-image-info"
-@@ -237,10 +214,6 @@
+@@ -249,11 +222,6 @@
        <menuitem id="context-viewimagedesc"
                  data-l10n-id="main-context-menu-image-desc"
                  oncommand="gContextMenu.viewImageDesc(event);"/>
@@ -100,10 +107,11 @@ index 438efc5cd610..133f55da3e7d 100644
 -      <menuitem id="context-setDesktopBackground"
 -                data-l10n-id="main-context-menu-image-set-image-as-background"
 -                oncommand="gContextMenu.setDesktopBackground();"/>
-       <menuitem id="context-ctp-play"
-                 data-l10n-id="main-context-menu-plugin-play"
-                 oncommand="gContextMenu.playPlugin();"/>
-@@ -256,16 +229,6 @@
+-      <menuseparator id="context-sep-sharing"/>
+ #ifdef XP_MACOSX
+       <menuitem id="context-bookmarkpage"
+                 data-l10n-id="main-context-menu-bookmark-page-mac"
+@@ -262,16 +230,6 @@
        <menuitem id="context-savepage"
                  data-l10n-id="main-context-menu-page-save"
                  oncommand="gContextMenu.savePageAs();"/>
@@ -115,12 +123,12 @@ index 438efc5cd610..133f55da3e7d 100644
 -            data-l10n-id="main-context-menu-send-to-device"
 -            hidden="true">
 -        <menupopup id="context-sendpagetodevice-popup"
--                   onpopupshowing="(() => { gSync.populateSendTabToDevicesMenu(event.target, gBrowser.currentURI.spec, gBrowser.contentTitle); })()"/>
+-                   onpopupshowing="(() => { gSync.populateSendTabToDevicesMenu(event.target, gBrowser.currentURI, gBrowser.contentTitle); })()"/>
 -      </menu>
        <menu id="fill-login" hidden="true">
          <menupopup id="fill-login-popup" />
        </menu>
-@@ -396,10 +359,6 @@
+@@ -434,10 +392,6 @@
        <menuitem id="context-viewsource"
                  data-l10n-id="main-context-menu-view-page-source"
                  oncommand="BrowserViewSource(gContextMenu.browser);"/>
@@ -132,5 +140,5 @@ index 438efc5cd610..133f55da3e7d 100644
                  hidden="true"
                  data-l10n-id="main-context-menu-inspect"
 -- 
-2.38.0
+2.42.1
 

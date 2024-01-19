@@ -1,4 +1,4 @@
-From 2d33334bd44b0c186cf8d9b2aae4f680772c07f2 Mon Sep 17 00:00:00 2001
+From 89257e20753f5a43bcefbb9386c73d5ea4cae444 Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
 Date: Fri, 17 Dec 2021 16:00:22 +0100
 Subject: [PATCH 04/10] skip the topsites provider due to horrible
@@ -9,14 +9,14 @@ to somehow have dropped it and returned NOTHING because topsites are
 disabled in my setup, leading to the dropmarker doing absolutely
 nothing.
 ---
- browser/components/urlbar/UrlbarProvidersManager.jsm | 7 +++++++
+ browser/components/urlbar/UrlbarProvidersManager.sys.mjs | 7 +++++++
  1 file changed, 7 insertions(+)
 
-diff --git a/browser/components/urlbar/UrlbarProvidersManager.jsm b/browser/components/urlbar/UrlbarProvidersManager.jsm
-index e05eda3fb296..78eb057e7b3b 100644
---- a/browser/components/urlbar/UrlbarProvidersManager.jsm
-+++ b/browser/components/urlbar/UrlbarProvidersManager.jsm
-@@ -381,6 +381,13 @@ class Query {
+diff --git a/browser/components/urlbar/UrlbarProvidersManager.sys.mjs b/browser/components/urlbar/UrlbarProvidersManager.sys.mjs
+index c64234753e67..3fb1ea565100 100644
+--- a/browser/components/urlbar/UrlbarProvidersManager.sys.mjs
++++ b/browser/components/urlbar/UrlbarProvidersManager.sys.mjs
+@@ -424,6 +424,13 @@ class Query {
        //     return;
        //   }
        provider.queryInstance = this;
@@ -31,5 +31,5 @@ index e05eda3fb296..78eb057e7b3b 100644
          // Not all isActive implementations are async, so wrap the call in a
          // promise so we can be sure we can call `then` on it.  Note that
 -- 
-2.38.0
+2.42.1
 

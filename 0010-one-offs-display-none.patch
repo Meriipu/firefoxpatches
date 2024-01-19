@@ -1,21 +1,21 @@
-From f713d4c73b31ab2cb2acef56b8492d1ad4f81db7 Mon Sep 17 00:00:00 2001
+From 3eb371f01b32ff9e298869fb0e02dff01691a9f4 Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
 Date: Fri, 17 Dec 2021 16:09:47 +0100
 Subject: [PATCH 10/10] one-offs: display: none
 
 ---
  browser/base/content/browser.css                      | 11 +++++++++++
- browser/components/urlbar/UrlbarInput.jsm             |  3 ++-
- .../components/urlbar/UrlbarProviderTabToSearch.jsm   |  4 ++++
- browser/components/urlbar/UrlbarSearchOneOffs.jsm     |  7 ++++++-
- browser/components/urlbar/UrlbarView.jsm              |  2 +-
+ browser/components/urlbar/UrlbarInput.sys.mjs         |  3 ++-
+ .../urlbar/UrlbarProviderTabToSearch.sys.mjs          |  4 ++++
+ browser/components/urlbar/UrlbarSearchOneOffs.sys.mjs |  7 ++++++-
+ browser/components/urlbar/UrlbarView.sys.mjs          |  2 +-
  5 files changed, 24 insertions(+), 3 deletions(-)
 
 diff --git a/browser/base/content/browser.css b/browser/base/content/browser.css
-index 24013f36b4e7..91f419a9f511 100644
+index d8132b9a511d..e366c214d644 100644
 --- a/browser/base/content/browser.css
 +++ b/browser/base/content/browser.css
-@@ -98,6 +98,17 @@ body {
+@@ -127,6 +127,17 @@ body {
    -moz-window-dragging: drag;
  }
  
@@ -33,12 +33,12 @@ index 24013f36b4e7..91f419a9f511 100644
  #toolbar-menubar[autohide="true"] {
    overflow: hidden;
  }
-diff --git a/browser/components/urlbar/UrlbarInput.jsm b/browser/components/urlbar/UrlbarInput.jsm
-index b0ae70e859b1..ba15084d9eab 100644
---- a/browser/components/urlbar/UrlbarInput.jsm
-+++ b/browser/components/urlbar/UrlbarInput.jsm
-@@ -86,7 +86,8 @@ class UrlbarInput {
-           </html:div>
+diff --git a/browser/components/urlbar/UrlbarInput.sys.mjs b/browser/components/urlbar/UrlbarInput.sys.mjs
+index 3e7c25e14208..eff060584c33 100644
+--- a/browser/components/urlbar/UrlbarInput.sys.mjs
++++ b/browser/components/urlbar/UrlbarInput.sys.mjs
+@@ -101,7 +101,8 @@ export class UrlbarInput {
+                      consumeoutsideclicks="false"/>
            <hbox class="search-one-offs"
                  includecurrentengine="true"
 -                disabletab="true"/>
@@ -47,11 +47,11 @@ index b0ae70e859b1..ba15084d9eab 100644
          </vbox>
        `)
      );
-diff --git a/browser/components/urlbar/UrlbarProviderTabToSearch.jsm b/browser/components/urlbar/UrlbarProviderTabToSearch.jsm
-index 8b4e26d57dd6..8354555cd646 100644
---- a/browser/components/urlbar/UrlbarProviderTabToSearch.jsm
-+++ b/browser/components/urlbar/UrlbarProviderTabToSearch.jsm
-@@ -133,12 +133,16 @@ class ProviderTabToSearch extends UrlbarProvider {
+diff --git a/browser/components/urlbar/UrlbarProviderTabToSearch.sys.mjs b/browser/components/urlbar/UrlbarProviderTabToSearch.sys.mjs
+index 7a35694b8ea9..197eb4c75f5b 100644
+--- a/browser/components/urlbar/UrlbarProviderTabToSearch.sys.mjs
++++ b/browser/components/urlbar/UrlbarProviderTabToSearch.sys.mjs
+@@ -132,12 +132,16 @@ class ProviderTabToSearch extends UrlbarProvider {
     * @returns {boolean} Whether this provider should be invoked for the search.
     */
    async isActive(queryContext) {
@@ -62,17 +62,17 @@ index 8b4e26d57dd6..8354555cd646 100644
        queryContext.searchString &&
        queryContext.tokens.length == 1 &&
        !queryContext.searchMode &&
-       UrlbarPrefs.get("suggest.engines")
+       lazy.UrlbarPrefs.get("suggest.engines")
      );
 +    */
    }
  
    /**
-diff --git a/browser/components/urlbar/UrlbarSearchOneOffs.jsm b/browser/components/urlbar/UrlbarSearchOneOffs.jsm
-index 6eb547ece841..59f55ff68376 100644
---- a/browser/components/urlbar/UrlbarSearchOneOffs.jsm
-+++ b/browser/components/urlbar/UrlbarSearchOneOffs.jsm
-@@ -66,6 +66,8 @@ class UrlbarSearchOneOffs extends SearchOneOffs {
+diff --git a/browser/components/urlbar/UrlbarSearchOneOffs.sys.mjs b/browser/components/urlbar/UrlbarSearchOneOffs.sys.mjs
+index 910430b464d8..8c9227186fe4 100644
+--- a/browser/components/urlbar/UrlbarSearchOneOffs.sys.mjs
++++ b/browser/components/urlbar/UrlbarSearchOneOffs.sys.mjs
+@@ -62,6 +62,8 @@ export class UrlbarSearchOneOffs extends SearchOneOffs {
     *   True to enable, false to disable.
     */
    enable(enable) {
@@ -81,7 +81,7 @@ index 6eb547ece841..59f55ff68376 100644
      if (enable) {
        this.telemetryOrigin = "urlbar";
        this.style.display = "";
-@@ -101,10 +103,13 @@ class UrlbarSearchOneOffs extends SearchOneOffs {
+@@ -97,10 +99,13 @@ export class UrlbarSearchOneOffs extends SearchOneOffs {
     *   True if the one-offs are connected to a view.
     */
    get hasView() {
@@ -96,19 +96,19 @@ index 6eb547ece841..59f55ff68376 100644
    }
  
    /**
-diff --git a/browser/components/urlbar/UrlbarView.jsm b/browser/components/urlbar/UrlbarView.jsm
-index e55937ce372e..c784b42f1260 100644
---- a/browser/components/urlbar/UrlbarView.jsm
-+++ b/browser/components/urlbar/UrlbarView.jsm
-@@ -623,7 +623,7 @@ class UrlbarView {
-     let openPanelInstance = (this._openPanelInstance = {});
+diff --git a/browser/components/urlbar/UrlbarView.sys.mjs b/browser/components/urlbar/UrlbarView.sys.mjs
+index 8132662e4d42..ab1b0a81b7ac 100644
+--- a/browser/components/urlbar/UrlbarView.sys.mjs
++++ b/browser/components/urlbar/UrlbarView.sys.mjs
+@@ -717,7 +717,7 @@ export class UrlbarView {
+     let openPanelInstance = (this.#openPanelInstance = {});
      this.oneOffSearchButtons.willHide().then(willHide => {
-       if (!willHide && openPanelInstance == this._openPanelInstance) {
+       if (!willHide && openPanelInstance == this.#openPanelInstance) {
 -        this.oneOffSearchButtons.enable(true);
-+        this.oneOffSearchButtons.enable(false); // stop shitting up the urlbar
-         this._openPanel();
++        this.oneOffSearchButtons.enable(false);
+         this.#openPanel();
        }
      });
 -- 
-2.38.0
+2.42.1
 

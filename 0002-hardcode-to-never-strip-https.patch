@@ -1,29 +1,26 @@
-From 027d683c6c171db8187bdd0502d6b046d98a1a7e Mon Sep 17 00:00:00 2001
+From 1a716b34073689a04d6c4aa5f44c820b602b0df6 Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
 Date: Fri, 17 Dec 2021 15:36:42 +0100
 Subject: [PATCH 02/10] hardcode to never strip https
 
 ---
- browser/components/urlbar/UrlbarResult.jsm | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ browser/components/urlbar/UrlbarResult.sys.mjs | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/browser/components/urlbar/UrlbarResult.jsm b/browser/components/urlbar/UrlbarResult.jsm
-index 0dfdbc6b56b5..b47d9358a733 100644
---- a/browser/components/urlbar/UrlbarResult.jsm
-+++ b/browser/components/urlbar/UrlbarResult.jsm
-@@ -238,7 +238,11 @@ class UrlbarResult {
+diff --git a/browser/components/urlbar/UrlbarResult.sys.mjs b/browser/components/urlbar/UrlbarResult.sys.mjs
+index 81f9aa118d06..206801cf5592 100644
+--- a/browser/components/urlbar/UrlbarResult.sys.mjs
++++ b/browser/components/urlbar/UrlbarResult.sys.mjs
+@@ -264,7 +264,8 @@ export class UrlbarResult {
        // For display purposes we need to unescape the url.
        payloadInfo.displayUrl = [...payloadInfo.url];
        let url = payloadInfo.displayUrl[0];
--      if (url && UrlbarPrefs.get("trimURLs")) {
-+      // TRASHBAR: This chunk of code trims urls. Restore behaviour to before
-+      // the pref. stripHttps was removed, but hardcode every instance of the
-+      // pref to false (do not strip https no matter what). The trimUrl option
-+      // still exists in 77.0.1, so for now this can stay.
-+      if (false && url && UrlbarPrefs.get("trimURLs")) {
-         url = BrowserUIUtils.removeSingleTrailingSlashFromURL(url);
+-      if (url && lazy.UrlbarPrefs.get("trimURLs")) {
++      // PATCHED: never trim urls I do not trust the pref
++      if (false && url && lazy.UrlbarPrefs.get("trimURLs")) {
+         url = lazy.BrowserUIUtils.removeSingleTrailingSlashFromURL(url);
          if (url.startsWith("https://")) {
            url = url.substring(8);
 -- 
-2.38.0
+2.42.1
 

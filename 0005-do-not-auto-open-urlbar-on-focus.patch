@@ -1,17 +1,17 @@
-From d173dac10bf56a17894ad0f7981961ac19e79b4f Mon Sep 17 00:00:00 2001
+From 87d0aa17b229414600fe61ba8f661c8381cdf89b Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
 Date: Fri, 17 Dec 2021 16:01:07 +0100
 Subject: [PATCH 05/10] do not auto-open urlbar on focus
 
 ---
- browser/components/urlbar/UrlbarInput.jsm | 6 +++++-
+ browser/components/urlbar/UrlbarInput.sys.mjs | 6 +++++-
  1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/browser/components/urlbar/UrlbarInput.jsm b/browser/components/urlbar/UrlbarInput.jsm
-index ea07ffad2043..b0ae70e859b1 100644
---- a/browser/components/urlbar/UrlbarInput.jsm
-+++ b/browser/components/urlbar/UrlbarInput.jsm
-@@ -2970,7 +2970,8 @@ class UrlbarInput {
+diff --git a/browser/components/urlbar/UrlbarInput.sys.mjs b/browser/components/urlbar/UrlbarInput.sys.mjs
+index 3364a2151a0f..3e7c25e14208 100644
+--- a/browser/components/urlbar/UrlbarInput.sys.mjs
++++ b/browser/components/urlbar/UrlbarInput.sys.mjs
+@@ -3351,7 +3351,8 @@ export class UrlbarInput {
      }
  
      if (this.focusedViaMousedown) {
@@ -21,16 +21,16 @@ index ea07ffad2043..b0ae70e859b1 100644
      } else if (this.inputField.hasAttribute("refocused-by-panel")) {
        this._maybeSelectAll(true); // not sure what true here does
      }
-@@ -3040,6 +3041,8 @@ class UrlbarInput {
+@@ -3421,6 +3422,8 @@ export class UrlbarInput {
            this._preventClickSelectsAll = true;
-           this.search(UrlbarTokenizer.RESTRICT.SEARCH);
+           this.search(lazy.UrlbarTokenizer.RESTRICT.SEARCH);
          } else {
 +          console.log("[UrlbarInput autoOpen] haha no thanks");
 +          /*
            // Do not suppress the focus border if we are already focused. If we
            // did, we'd hide the focus border briefly then show it again if the
            // user has Top Sites disabled, creating a flashing effect.
-@@ -3047,6 +3050,7 @@ class UrlbarInput {
+@@ -3428,6 +3431,7 @@ export class UrlbarInput {
              event,
              suppressFocusBorder: !hasFocus,
            });
@@ -39,5 +39,5 @@ index ea07ffad2043..b0ae70e859b1 100644
          break;
        case this.dropmarker:
 -- 
-2.38.0
+2.42.1
 

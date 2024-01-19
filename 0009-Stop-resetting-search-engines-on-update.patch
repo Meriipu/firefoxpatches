@@ -1,20 +1,22 @@
-From a9f185f72e82f26626ec546a7358d7afc20f9025 Mon Sep 17 00:00:00 2001
+From 4c809ce71c77ffaefb2da210e7eb5745656b3f6d Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
 Date: Fri, 17 Dec 2021 16:06:28 +0100
 Subject: [PATCH 09/10] Stop resetting search engines on update
 
 ---
- toolkit/components/search/SearchService.jsm | 7 +++++++
- 1 file changed, 7 insertions(+)
+ toolkit/components/search/SearchService.sys.mjs | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/toolkit/components/search/SearchService.jsm b/toolkit/components/search/SearchService.jsm
-index c661cedfdcaf..87d541311e15 100644
---- a/toolkit/components/search/SearchService.jsm
-+++ b/toolkit/components/search/SearchService.jsm
-@@ -356,6 +356,10 @@ SearchService.prototype = {
+diff --git a/toolkit/components/search/SearchService.sys.mjs b/toolkit/components/search/SearchService.sys.mjs
+index afd0fff703f8..8a3235fa706d 100644
+--- a/toolkit/components/search/SearchService.sys.mjs
++++ b/toolkit/components/search/SearchService.sys.mjs
+@@ -1450,6 +1450,12 @@ export class SearchService {
          await this.removeEngine(engine);
          engineRemoved = true;
        }
++      // remove all the ad engines like ebay that mozilla keeps sneaking in
++      // if you use others than ddg I guess you have to edit the patch
 +      else if (engine.name != "DuckDuckGo") {
 +        await this.removeEngine(engine);
 +        engineRemoved = true;
@@ -22,16 +24,19 @@ index c661cedfdcaf..87d541311e15 100644
      }
      // If we've removed an engine, and we don't have any left, we need to
      // reload the engines - it is possible the settings just had one engine in it,
-@@ -388,6 +392,9 @@ SearchService.prototype = {
+@@ -1479,6 +1485,12 @@ export class SearchService {
      ) {
        return true;
      }
++
++    // ignore engines that are not ddg
 +    if (engine.name != "DuckDuckGo") {
 +      return true;
 +    }
++
      return false;
-   },
+   }
  
 -- 
-2.38.0
+2.42.1
 
