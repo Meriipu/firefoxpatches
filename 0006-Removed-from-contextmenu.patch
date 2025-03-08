@@ -1,7 +1,7 @@
-From abb32bd219d6c4bfad273b5e3a140adf6fdd9f4a Mon Sep 17 00:00:00 2001
+From 931d1abf2d411dda77a9d0e432616eefd5892917 Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
 Date: Fri, 17 Dec 2021 16:02:05 +0100
-Subject: [PATCH 07/10] Removed from contextmenu:
+Subject: [PATCH 6/9] Removed from contextmenu:
 
 * email-image
 * save-snapshot,
@@ -18,7 +18,7 @@ video itself.
  1 file changed, 10 insertions(+), 56 deletions(-)
 
 diff --git a/browser/base/content/browser-context.inc b/browser/base/content/browser-context.inc
-index 6ca8d7ebaa7f..7ffdd2fa9113 100644
+index 5f17659c8745..87dad0b9c190 100644
 --- a/browser/base/content/browser-context.inc
 +++ b/browser/base/content/browser-context.inc
 @@ -105,9 +105,6 @@
@@ -128,10 +128,10 @@ index 6ca8d7ebaa7f..7ffdd2fa9113 100644
        <menu id="fill-login" hidden="true">
          <menupopup id="fill-login-popup" />
        </menu>
-@@ -434,10 +392,6 @@
+@@ -442,10 +400,6 @@
        <menuitem id="context-viewsource"
                  data-l10n-id="main-context-menu-view-page-source"
-                 oncommand="BrowserViewSource(gContextMenu.browser);"/>
+                 oncommand="BrowserCommands.viewSource(gContextMenu.browser);"/>
 -      <menuitem id="context-inspect-a11y"
 -                hidden="true"
 -                data-l10n-id="main-context-menu-inspect-a11y-properties"
@@ -140,5 +140,5 @@ index 6ca8d7ebaa7f..7ffdd2fa9113 100644
                  hidden="true"
                  data-l10n-id="main-context-menu-inspect"
 -- 
-2.42.1
+2.48.1
 

@@ -1,17 +1,17 @@
-From 4c809ce71c77ffaefb2da210e7eb5745656b3f6d Mon Sep 17 00:00:00 2001
+From fe106cb0e7e39ea151243aac027901477b5028d2 Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
 Date: Fri, 17 Dec 2021 16:06:28 +0100
-Subject: [PATCH 09/10] Stop resetting search engines on update
+Subject: [PATCH 8/9] Stop resetting search engines on update
 
 ---
  toolkit/components/search/SearchService.sys.mjs | 12 ++++++++++++
  1 file changed, 12 insertions(+)
 
 diff --git a/toolkit/components/search/SearchService.sys.mjs b/toolkit/components/search/SearchService.sys.mjs
-index afd0fff703f8..8a3235fa706d 100644
+index 2aec524d1967..e5cc4fca3766 100644
 --- a/toolkit/components/search/SearchService.sys.mjs
 +++ b/toolkit/components/search/SearchService.sys.mjs
-@@ -1450,6 +1450,12 @@ export class SearchService {
+@@ -1527,6 +1527,12 @@ export class SearchService {
          await this.removeEngine(engine);
          engineRemoved = true;
        }
@@ -24,7 +24,7 @@ index afd0fff703f8..8a3235fa706d 100644
      }
      // If we've removed an engine, and we don't have any left, we need to
      // reload the engines - it is possible the settings just had one engine in it,
-@@ -1479,6 +1485,12 @@ export class SearchService {
+@@ -1556,6 +1562,12 @@ export class SearchService {
      ) {
        return true;
      }
@@ -38,5 +38,5 @@ index afd0fff703f8..8a3235fa706d 100644
    }
  
 -- 
-2.42.1
+2.48.1
 

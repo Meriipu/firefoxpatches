@@ -1,17 +1,17 @@
-From 87d0aa17b229414600fe61ba8f661c8381cdf89b Mon Sep 17 00:00:00 2001
+From a5457c26e3b95fc19cba414e1d4aa3ff155e0045 Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
 Date: Fri, 17 Dec 2021 16:01:07 +0100
-Subject: [PATCH 05/10] do not auto-open urlbar on focus
+Subject: [PATCH 4/9] do not auto-open urlbar on focus
 
 ---
  browser/components/urlbar/UrlbarInput.sys.mjs | 6 +++++-
  1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/browser/components/urlbar/UrlbarInput.sys.mjs b/browser/components/urlbar/UrlbarInput.sys.mjs
-index 3364a2151a0f..3e7c25e14208 100644
+index 3a2598d8ef9c..b447b58dfb71 100644
 --- a/browser/components/urlbar/UrlbarInput.sys.mjs
 +++ b/browser/components/urlbar/UrlbarInput.sys.mjs
-@@ -3351,7 +3351,8 @@ export class UrlbarInput {
+@@ -3638,7 +3638,8 @@ export class UrlbarInput {
      }
  
      if (this.focusedViaMousedown) {
@@ -21,7 +21,7 @@ index 3364a2151a0f..3e7c25e14208 100644
      } else if (this.inputField.hasAttribute("refocused-by-panel")) {
        this._maybeSelectAll(true); // not sure what true here does
      }
-@@ -3421,6 +3422,8 @@ export class UrlbarInput {
+@@ -3708,6 +3709,8 @@ export class UrlbarInput {
            this._preventClickSelectsAll = true;
            this.search(lazy.UrlbarTokenizer.RESTRICT.SEARCH);
          } else {
@@ -30,14 +30,14 @@ index 3364a2151a0f..3e7c25e14208 100644
            // Do not suppress the focus border if we are already focused. If we
            // did, we'd hide the focus border briefly then show it again if the
            // user has Top Sites disabled, creating a flashing effect.
-@@ -3428,6 +3431,7 @@ export class UrlbarInput {
+@@ -3715,6 +3718,7 @@ export class UrlbarInput {
              event,
              suppressFocusBorder: !hasFocus,
            });
 +          */
          }
          break;
-       case this.dropmarker:
+       }
 -- 
-2.42.1
+2.48.1
 

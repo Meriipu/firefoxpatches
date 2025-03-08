@@ -1,6 +1,7 @@
 These are the prefs I have that I believe are relevant. 
 Some of them were likely removed in firefox 77 but too lazy to shorten the list.
 
+browser.urlbar.trimURLs	false
 browser.urlbar.openViewOnFocus  false
 browser.urlbar.update1.interventions  false 
 browser.urlbar.update1.searchTips false 

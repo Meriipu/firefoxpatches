@@ -1,17 +1,17 @@
-From 86a907673f95a276acc9d107bd95c7aff11fb64d Mon Sep 17 00:00:00 2001
+From a03f25c26dc98af7e8f9753aa84687dda7220036 Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
 Date: Fri, 17 Dec 2021 16:02:39 +0100
-Subject: [PATCH 08/10] Disable interventions (without using policies.json)
+Subject: [PATCH 7/9] Disable interventions (without using policies.json)
 
 ---
  browser/components/urlbar/UrlbarProviderInterventions.sys.mjs | 2 ++
  1 file changed, 2 insertions(+)
 
 diff --git a/browser/components/urlbar/UrlbarProviderInterventions.sys.mjs b/browser/components/urlbar/UrlbarProviderInterventions.sys.mjs
-index 2c2b13d9cb47..c69afd1bbc8b 100644
+index 51aab7179f63..d0ee3d3580fd 100644
 --- a/browser/components/urlbar/UrlbarProviderInterventions.sys.mjs
 +++ b/browser/components/urlbar/UrlbarProviderInterventions.sys.mjs
-@@ -500,6 +500,8 @@ class ProviderInterventions extends UrlbarProvider {
+@@ -492,6 +492,8 @@ class ProviderInterventions extends UrlbarProvider {
     * @returns {boolean} Whether this provider should be invoked for the search.
     */
    isActive(queryContext) {
@@ -21,5 +21,5 @@ index 2c2b13d9cb47..c69afd1bbc8b 100644
        !queryContext.searchString ||
        queryContext.searchString.length > UrlbarUtils.MAX_TEXT_LENGTH ||
 -- 
-2.42.1
+2.48.1
 
