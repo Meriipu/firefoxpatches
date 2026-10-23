@@ -1,0 +1,26 @@
+From 24a3b634d852157bef19dee4fc9ab6575a24566f Mon Sep 17 00:00:00 2001
+From: Meriipu <Meriipu@users.noreply.github.com>
+Date: Fri, 3 Apr 2026 05:21:14 +0200
+Subject: [PATCH 07/10] remove screenshot from context menu
+
+---
+ browser/base/content/browser-context.inc | 3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/browser/base/content/browser-context.inc b/browser/base/content/browser-context.inc
+index 1b0f3800eaba..2099a97e0844 100644
+--- a/browser/base/content/browser-context.inc
++++ b/browser/base/content/browser-context.inc
+@@ -313,9 +313,6 @@
+                 data-l10n-id="text-action-select-all"/>
+       <menuseparator id="context-sep-pdfjs-selectall"/>
+ 
+-      <menuitem id="context-take-screenshot"
+-                data-l10n-id="main-context-menu-take-screenshot"/>
+-      <menuseparator id="context-sep-screenshots"/>
+       <menuitem id="context-keywordfield"
+                 data-l10n-id="main-context-menu-keyword"/>
+       <menuitem id="context-add-engine"
+-- 
+2.53.0
+

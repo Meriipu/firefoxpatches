@@ -1,18 +1,18 @@
-From fe106cb0e7e39ea151243aac027901477b5028d2 Mon Sep 17 00:00:00 2001
+From 64b8f40279cfa7026ac9f0ce9b36551d0f226894 Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
 Date: Fri, 17 Dec 2021 16:06:28 +0100
-Subject: [PATCH 8/9] Stop resetting search engines on update
+Subject: [PATCH 09/10] Stop resetting search engines on update
 
 ---
  toolkit/components/search/SearchService.sys.mjs | 12 ++++++++++++
  1 file changed, 12 insertions(+)
 
 diff --git a/toolkit/components/search/SearchService.sys.mjs b/toolkit/components/search/SearchService.sys.mjs
-index 2aec524d1967..e5cc4fca3766 100644
+index aca95f0acb02..abef789ed1e8 100644
 --- a/toolkit/components/search/SearchService.sys.mjs
 +++ b/toolkit/components/search/SearchService.sys.mjs
-@@ -1527,6 +1527,12 @@ export class SearchService {
-         await this.removeEngine(engine);
+@@ -1626,6 +1626,12 @@ export class SearchService {
+         );
          engineRemoved = true;
        }
 +      // remove all the ad engines like ebay that mozilla keeps sneaking in
@@ -24,7 +24,7 @@ index 2aec524d1967..e5cc4fca3766 100644
      }
      // If we've removed an engine, and we don't have any left, we need to
      // reload the engines - it is possible the settings just had one engine in it,
-@@ -1556,6 +1562,12 @@ export class SearchService {
+@@ -1655,6 +1661,12 @@ export class SearchService {
      ) {
        return true;
      }
@@ -38,5 +38,5 @@ index 2aec524d1967..e5cc4fca3766 100644
    }
  
 -- 
-2.48.1
+2.53.0
 

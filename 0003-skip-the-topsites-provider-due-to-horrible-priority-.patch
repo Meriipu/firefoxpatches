@@ -1,7 +1,7 @@
-From 4fd1f2d1bb86a8d633435b4aade5e655f2f2411c Mon Sep 17 00:00:00 2001
+From 11d040b80c4e22f96bf69a9d52b204055888f00b Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
 Date: Fri, 17 Dec 2021 16:00:22 +0100
-Subject: [PATCH 3/9] skip the topsites provider due to horrible
+Subject: [PATCH 03/10] skip the topsites provider due to horrible
  priority-stealing behaviour
 
 even though history was getting sent to the query this provider seems
@@ -13,10 +13,10 @@ nothing.
  1 file changed, 7 insertions(+)
 
 diff --git a/browser/components/urlbar/UrlbarProvidersManager.sys.mjs b/browser/components/urlbar/UrlbarProvidersManager.sys.mjs
-index 60b0cc6261b2..61734aef08ae 100644
+index b626a27edcb6..f420e20c5685 100644
 --- a/browser/components/urlbar/UrlbarProvidersManager.sys.mjs
 +++ b/browser/components/urlbar/UrlbarProvidersManager.sys.mjs
-@@ -605,6 +605,13 @@ class Query {
+@@ -562,6 +562,13 @@ export class Query {
        //     return;
        //   }
        provider.queryInstance = this;
@@ -28,8 +28,8 @@ index 60b0cc6261b2..61734aef08ae 100644
 +        continue;
 +      }
        activePromises.push(
-         // Not all isActive implementations are async, so wrap the call in a
-         // promise so we can be sure we can call `then` on it.  Note that
+         provider
+           .isActive(this.context, this.controller)
 -- 
-2.48.1
+2.53.0
 

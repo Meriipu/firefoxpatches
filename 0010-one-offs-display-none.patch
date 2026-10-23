@@ -1,37 +1,21 @@
-From b228fa9f473b1a7fa9f874a4ac640cd91f1cd909 Mon Sep 17 00:00:00 2001
+From 3d8282e16fa9a95be565743e18431c004d4868ee Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
 Date: Fri, 17 Dec 2021 16:09:47 +0100
-Subject: [PATCH 9/9] one-offs: display: none
+Subject: [PATCH 10/10] one-offs: display: none
 
 ---
- browser/base/content/browser.css                           | 5 +++++
  browser/components/urlbar/UrlbarInput.sys.mjs              | 3 ++-
  .../components/urlbar/UrlbarProviderTabToSearch.sys.mjs    | 4 ++++
  browser/components/urlbar/UrlbarSearchOneOffs.sys.mjs      | 7 ++++++-
  browser/components/urlbar/UrlbarView.sys.mjs               | 2 +-
+ browser/themes/shared/browser-shared.css                   | 5 +++++
  5 files changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/browser/base/content/browser.css b/browser/base/content/browser.css
-index 5c1a2719ab9c..97dda48ef734 100644
---- a/browser/base/content/browser.css
-+++ b/browser/base/content/browser.css
-@@ -4,6 +4,11 @@
- 
- @namespace html url("http://www.w3.org/1999/xhtml");
- 
-+/* stop shitting up the urlbar */
-+.search-one-offs {
-+  display: none !important;
-+}
-+
- panelmultiview {
-   align-items: flex-start;
-   min-width: 0;
 diff --git a/browser/components/urlbar/UrlbarInput.sys.mjs b/browser/components/urlbar/UrlbarInput.sys.mjs
-index b447b58dfb71..897af03288a2 100644
+index 70bceb165647..41c20b36f29d 100644
 --- a/browser/components/urlbar/UrlbarInput.sys.mjs
 +++ b/browser/components/urlbar/UrlbarInput.sys.mjs
-@@ -98,7 +98,8 @@ export class UrlbarInput {
+@@ -115,7 +115,8 @@ export class UrlbarInput {
                       consumeoutsideclicks="false"/>
            <hbox class="search-one-offs"
                  includecurrentengine="true"
@@ -42,11 +26,11 @@ index b447b58dfb71..897af03288a2 100644
        `)
      );
 diff --git a/browser/components/urlbar/UrlbarProviderTabToSearch.sys.mjs b/browser/components/urlbar/UrlbarProviderTabToSearch.sys.mjs
-index 5d10bd3528cf..b9c380af2528 100644
+index 4961f5b9a70d..3be79c8c5141 100644
 --- a/browser/components/urlbar/UrlbarProviderTabToSearch.sys.mjs
 +++ b/browser/components/urlbar/UrlbarProviderTabToSearch.sys.mjs
-@@ -128,12 +128,16 @@ class ProviderTabToSearch extends UrlbarProvider {
-    * @returns {boolean} Whether this provider should be invoked for the search.
+@@ -129,6 +129,9 @@ class ProviderTabToSearch extends UrlbarProvider {
+    * @param {UrlbarQueryContext} queryContext The query context object
     */
    async isActive(queryContext) {
 +    return false;
@@ -55,18 +39,19 @@ index 5d10bd3528cf..b9c380af2528 100644
      return (
        queryContext.searchString &&
        queryContext.tokens.length == 1 &&
-       !queryContext.searchMode &&
-       lazy.UrlbarPrefs.get("suggest.engines")
+@@ -139,6 +142,7 @@ class ProviderTabToSearch extends UrlbarProvider {
+         lazy.ActionsProviderContextualSearch.isActive(queryContext)
+       )
      );
 +    */
    }
  
    /**
 diff --git a/browser/components/urlbar/UrlbarSearchOneOffs.sys.mjs b/browser/components/urlbar/UrlbarSearchOneOffs.sys.mjs
-index 60d9fa725cb7..6aab485d7b89 100644
+index 292bfbf1ea6f..64b4c383f5c8 100644
 --- a/browser/components/urlbar/UrlbarSearchOneOffs.sys.mjs
 +++ b/browser/components/urlbar/UrlbarSearchOneOffs.sys.mjs
-@@ -64,6 +64,8 @@ export class UrlbarSearchOneOffs extends SearchOneOffs {
+@@ -57,6 +57,8 @@ export class UrlbarSearchOneOffs extends SearchOneOffs {
     *   True to enable, false to disable.
     */
    enable(enable) {
@@ -75,7 +60,7 @@ index 60d9fa725cb7..6aab485d7b89 100644
      if (lazy.UrlbarPrefs.getScotchBonnetPref("scotchBonnet.disableOneOffs")) {
        enable = false;
      }
-@@ -230,10 +232,13 @@ export class UrlbarSearchOneOffs extends SearchOneOffs {
+@@ -95,10 +97,13 @@ export class UrlbarSearchOneOffs extends SearchOneOffs {
     *   True if the one-offs are connected to a view.
     */
    get hasView() {
@@ -91,10 +76,10 @@ index 60d9fa725cb7..6aab485d7b89 100644
  
    /**
 diff --git a/browser/components/urlbar/UrlbarView.sys.mjs b/browser/components/urlbar/UrlbarView.sys.mjs
-index c2408ce49222..b8479fd3797d 100644
+index a6acacf4a6e0..345dcb723448 100644
 --- a/browser/components/urlbar/UrlbarView.sys.mjs
 +++ b/browser/components/urlbar/UrlbarView.sys.mjs
-@@ -738,7 +738,7 @@ export class UrlbarView {
+@@ -756,7 +756,7 @@ export class UrlbarView {
      let openPanelInstance = (this.#openPanelInstance = {});
      this.oneOffSearchButtons.willHide().then(willHide => {
        if (!willHide && openPanelInstance == this.#openPanelInstance) {
@@ -103,6 +88,22 @@ index c2408ce49222..b8479fd3797d 100644
          this.#openPanel();
        }
      });
+diff --git a/browser/themes/shared/browser-shared.css b/browser/themes/shared/browser-shared.css
+index adb35901f766..a88e98ae93d1 100644
+--- a/browser/themes/shared/browser-shared.css
++++ b/browser/themes/shared/browser-shared.css
+@@ -28,6 +28,11 @@
+ @import url("chrome://browser/skin/UITour.css");
+ @import url("chrome://browser/skin/formautofill-notification.css");
+ 
++/* stop shitting up the urlbar */
++.search-one-offs {
++  display: none !important;
++}
++
+ :root,
+ body {
+   height: 100%;
 -- 
-2.48.1
+2.53.0
 
