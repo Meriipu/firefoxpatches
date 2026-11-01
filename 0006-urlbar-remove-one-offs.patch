@@ -1,0 +1,78 @@
+From 406cc7ba1db30d6011aa732d774d574e4da3c5db Mon Sep 17 00:00:00 2001
+From: Meriipu <Meriipu@users.noreply.github.com>
+Date: Sun, 25 Oct 2026 21:03:31 +0100
+Subject: [PATCH 06/12] urlbar: remove one-offs
+
+one offs seem like ways firefox try to force sponsored search engines
+upon users
+---
+ browser/components/urlbar/UrlbarProviderTabToSearch.sys.mjs | 1 +
+ browser/components/urlbar/UrlbarSearchOneOffs.sys.mjs       | 3 +++
+ browser/components/urlbar/content/UrlbarView.mjs            | 2 +-
+ browser/themes/shared/browser-shared.css                    | 4 ++++
+ 4 files changed, 9 insertions(+), 1 deletion(-)
+
+diff --git a/browser/components/urlbar/UrlbarProviderTabToSearch.sys.mjs b/browser/components/urlbar/UrlbarProviderTabToSearch.sys.mjs
+index fd09f148eccd..ef3ab4322f6c 100644
+--- a/browser/components/urlbar/UrlbarProviderTabToSearch.sys.mjs
++++ b/browser/components/urlbar/UrlbarProviderTabToSearch.sys.mjs
+@@ -114,6 +114,7 @@ export class UrlbarProviderTabToSearch extends UrlbarProvider {
+    * @param {UrlbarQueryContext} queryContext The query context object
+    */
+   async isActive(queryContext) {
++    return false;
+     return (
+       queryContext.searchString &&
+       queryContext.tokens.length == 1 &&
+diff --git a/browser/components/urlbar/UrlbarSearchOneOffs.sys.mjs b/browser/components/urlbar/UrlbarSearchOneOffs.sys.mjs
+index df37562e6df9..7efb6203028e 100644
+--- a/browser/components/urlbar/UrlbarSearchOneOffs.sys.mjs
++++ b/browser/components/urlbar/UrlbarSearchOneOffs.sys.mjs
+@@ -62,6 +62,7 @@ export class UrlbarSearchOneOffs extends SearchOneOffs {
+    *   True to enable, false to disable.
+    */
+   enable(enable) {
++    enable = false;
+     if (lazy.UrlbarPrefs.getScotchBonnetPref("scotchBonnet.disableOneOffs")) {
+       enable = false;
+     }
+@@ -100,6 +101,8 @@ export class UrlbarSearchOneOffs extends SearchOneOffs {
+    *   True if the one-offs are connected to a view.
+    */
+   get hasView() {
++    return false;
++
+     // Return true if the one-offs are enabled.  We set style.display = "none"
+     // when they're disabled, and we hide the container when there are no
+     // engines to show.
+diff --git a/browser/components/urlbar/content/UrlbarView.mjs b/browser/components/urlbar/content/UrlbarView.mjs
+index 84df8092e141..a7620e6a5d96 100644
+--- a/browser/components/urlbar/content/UrlbarView.mjs
++++ b/browser/components/urlbar/content/UrlbarView.mjs
+@@ -824,7 +824,7 @@ export class UrlbarView {
+     let openPanelInstance = (this.#openPanelInstance = {});
+     this.oneOffSearchButtons?.willHide().then(willHide => {
+       if (!willHide && openPanelInstance == this.#openPanelInstance) {
+-        this.oneOffSearchButtons.enable(true);
++        this.oneOffSearchButtons.enable(false);
+         this.#openPanel();
+       }
+     });
+diff --git a/browser/themes/shared/browser-shared.css b/browser/themes/shared/browser-shared.css
+index 12d5982b1244..10a6c0b12ac7 100644
+--- a/browser/themes/shared/browser-shared.css
++++ b/browser/themes/shared/browser-shared.css
+@@ -35,6 +35,10 @@
+ @import url("chrome://browser/skin/UITour.css");
+ @import url("chrome://browser/skin/formautofill-notification.css");
+ 
++.search-one-offs {
++  display: none !important;
++}
++
+ :root,
+ body {
+   height: 100%;
+-- 
+2.56.0
+

@@ -1,0 +1,48 @@
+From c4234a612ca66858106375c9469192f7e4f43b1c Mon Sep 17 00:00:00 2001
+From: Meriipu <Meriipu@users.noreply.github.com>
+Date: Sun, 25 Oct 2026 01:34:45 +0200
+Subject: [PATCH 02/12] urlbar: dont autoopen urlbar suggestions on focus
+
+clicking the urlbar no longer autoopens it and neither does focusing
+it by default in a new tab
+
+focusing the urlbar with ctrl+L or typing in it will drop down search
+suggestions
+
+the autodropdown is very distracting on new tabs or when you are trying
+to place the cursor on a parameter in the url to edit it
+---
+ browser/components/urlbar/content/UrlbarInput.mjs | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/browser/components/urlbar/content/UrlbarInput.mjs b/browser/components/urlbar/content/UrlbarInput.mjs
+index 094b5e8baaf5..261bbb7c3f57 100644
+--- a/browser/components/urlbar/content/UrlbarInput.mjs
++++ b/browser/components/urlbar/content/UrlbarInput.mjs
+@@ -5397,7 +5397,7 @@ ${
+     }
+ 
+     if (this.focusedViaMousedown) {
+-      this.view.autoOpen({ event });
++      //this.view.autoOpen({ event });
+     } else {
+       if (this._untrimOnFocusAfterKeydown) {
+         // While the mousedown focus has more complex implications due to drag
+@@ -5470,10 +5470,10 @@ ${
+         // Do not suppress the focus border if we are already focused. If we
+         // did, we'd hide the focus border briefly then show it again if the
+         // user has Top Sites disabled, creating a flashing effect.
+-        this.view.autoOpen({
+-          event,
+-          suppressFocusBorder: !hasFocus,
+-        });
++        //this.view.autoOpen({
++        //  event,
++        //  suppressFocusBorder: !hasFocus,
++        //});
+         break;
+       }
+       case this.window:
+-- 
+2.56.0
+

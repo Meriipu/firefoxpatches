@@ -1,17 +1,22 @@
-From 64b8f40279cfa7026ac9f0ce9b36551d0f226894 Mon Sep 17 00:00:00 2001
+From 801a98fce0da4824248b76bef31d0b3286104bec Mon Sep 17 00:00:00 2001
 From: Meriipu <Meriipu@users.noreply.github.com>
-Date: Fri, 17 Dec 2021 16:06:28 +0100
-Subject: [PATCH 09/10] Stop resetting search engines on update
+Date: Sun, 25 Oct 2026 21:06:02 +0100
+Subject: [PATCH 07/12] urlbar: disable all search engines except ddg
 
+firefox regularly adds sponsored search engines to your list of engines
+without user-input so this patch removes any that are not ddg
+
+if you use other engines you will probably have to edit the patch to
+include those
 ---
  toolkit/components/search/SearchService.sys.mjs | 12 ++++++++++++
  1 file changed, 12 insertions(+)
 
 diff --git a/toolkit/components/search/SearchService.sys.mjs b/toolkit/components/search/SearchService.sys.mjs
-index aca95f0acb02..abef789ed1e8 100644
+index 2d0f0d1d9b4e..ae281fbe9be1 100644
 --- a/toolkit/components/search/SearchService.sys.mjs
 +++ b/toolkit/components/search/SearchService.sys.mjs
-@@ -1626,6 +1626,12 @@ export class SearchService {
+@@ -1755,6 +1755,12 @@ export const SearchService = new (class SearchService {
          );
          engineRemoved = true;
        }
@@ -24,8 +29,8 @@ index aca95f0acb02..abef789ed1e8 100644
      }
      // If we've removed an engine, and we don't have any left, we need to
      // reload the engines - it is possible the settings just had one engine in it,
-@@ -1655,6 +1661,12 @@ export class SearchService {
-     ) {
+@@ -1798,6 +1804,12 @@ export const SearchService = new (class SearchService {
+       logIgnored(engine.name, url, "submission url");
        return true;
      }
 +
@@ -38,5 +43,5 @@ index aca95f0acb02..abef789ed1e8 100644
    }
  
 -- 
-2.53.0
+2.56.0
 

@@ -1,0 +1,84 @@
+From 93f330635b4327c4e0a967a174a820f2f46f6df2 Mon Sep 17 00:00:00 2001
+From: Meriipu <Meriipu@users.noreply.github.com>
+Date: Fri, 23 Oct 2026 20:45:57 +0200
+Subject: [PATCH 01/12] urlbar: dont select whole url on first click
+
+this restores the old behaviour controlled by the long removed option
+browser.urlbar.clickSelectsAll=false where clicking the url places the
+cursor down but doesnt select the whole url as if you want to replace
+the whole thing instead of edit your current url (first this is what
+new tabs are for and second you can doubleclick if you want to select
+the whole url)
+
+this is way more user-friendly if you need to edit url parameters in
+the urlbar without awkward click+drag or click+wait+click workarounds
+and it doesnt hamper selecting the full url since in that case you can
+just doubleclick to select all
+---
+ .../components/urlbar/content/UrlbarInput.mjs | 26 +++++++++++++++++--
+ 1 file changed, 24 insertions(+), 2 deletions(-)
+
+diff --git a/browser/components/urlbar/content/UrlbarInput.mjs b/browser/components/urlbar/content/UrlbarInput.mjs
+index 0b1b4b2f0f8d..094b5e8baaf5 100644
+--- a/browser/components/urlbar/content/UrlbarInput.mjs
++++ b/browser/components/urlbar/content/UrlbarInput.mjs
+@@ -5176,7 +5176,20 @@ ${
+    * Determines if we should select all the text in the Urlbar based on the
+    *  Urlbar state, and whether the selection is empty.
+    */
+-  #maybeSelectAll() {
++  #maybeSelectAll(dont_fukken_select) {
++    if (typeof dont_fukken_select == "boolean")
++    {
++      if (dont_fukken_select)
++      {
++        return;
++      }
++      else
++      {
++        this.select();
++        return;
++      }
++    }
++
+     if (
+       !this.#preventClickSelectsAll &&
+       this.#compositionState != lazy.UrlbarUtils.COMPOSITION.COMPOSING &&
+@@ -5282,10 +5295,17 @@ ${
+   }
+ 
+   _on_click(event) {
++    // never select by default
++    let dont_fukken_select = true;
++    // doubleclicking means selecting all is fine
++    if (event.detail == 2)
++    {
++      dont_fukken_select = false;
++    }
+     switch (event.target) {
+       case this.inputField:
+       case this._inputContainer:
+-        this.#maybeSelectAll();
++        this.#maybeSelectAll(dont_fukken_select);
+         this.#maybeUntrimUrl();
+         break;
+ 
+@@ -5318,6 +5338,7 @@ ${
+     switch (event.target) {
+       case this.inputField:
+       case this._inputContainer:
++        // built-in selection behaviour is fine with auxclick
+         this.#maybeSelectAll();
+         this.#maybeUntrimUrl();
+         break;
+@@ -5336,6 +5357,7 @@ ${
+       return;
+     }
+ 
++    // built-in selection behaviour is fine with right click
+     this.#maybeSelectAll();
+   }
+ 
+-- 
+2.56.0
+

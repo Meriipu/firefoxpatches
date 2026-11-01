@@ -1,0 +1,48 @@
+From 6d80be08dda25d29ca986c58aafd3227ddfa5769 Mon Sep 17 00:00:00 2001
+From: Meriipu <Meriipu@users.noreply.github.com>
+Date: Sun, 25 Oct 2026 17:14:16 +0100
+Subject: [PATCH 04/12] urlabr: skip broken topsites search provider
+
+UrlbarProviderTopSites will bog down the returned suggestions with
+pinned topsites (called Shortcuts in settings>search>suggest) even if
+you have topsites unchecked in the suggestion list
+
+the topsites are then cleared from the results or something and instead
+of giving back suggestions for most often visited sites there wont be
+any suggestions at all
+
+this patch excludes the topsites provider so the suggestion dropdown is
+filled with most visited sites
+
+if you actually want topsites in the dropdown suggestions this patch is
+probably not for you
+---
+ .../components/urlbar/UrlbarProvidersManager.sys.mjs | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/browser/components/urlbar/UrlbarProvidersManager.sys.mjs b/browser/components/urlbar/UrlbarProvidersManager.sys.mjs
+index d2e2415e6b7c..0aca6b60c921 100644
+--- a/browser/components/urlbar/UrlbarProvidersManager.sys.mjs
++++ b/browser/components/urlbar/UrlbarProvidersManager.sys.mjs
+@@ -750,6 +750,18 @@ export class Query {
+       //     return;
+       //   }
+       provider.queryInstance = this;
++
++
++      if (provider.name == "UrlbarProviderTopSites")
++      {
++        console.log("[UrlbarProvidersManager] Excluding provider: " + provider.name + " " + provider.type);
++        continue;
++      }
++      else
++      {
++        console.log("[UrlbarProvidersManager] Including provider: " + provider.name + " " + provider.type);
++      }
++
+       activePromises.push(
+         provider
+           .isActive(this.context, this.controller)
+-- 
+2.56.0
+

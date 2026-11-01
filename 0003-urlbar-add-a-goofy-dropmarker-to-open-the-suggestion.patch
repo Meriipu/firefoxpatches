@@ -1,0 +1,135 @@
+From a126ce6a7fe8502902d26f51990c1f4223bf2881 Mon Sep 17 00:00:00 2001
+From: Meriipu <Meriipu@users.noreply.github.com>
+Date: Fri, 23 Oct 2026 22:45:00 +0200
+Subject: [PATCH 03/12] urlbar: add a goofy dropmarker to open the
+ suggestion-dropdown
+
+this patch restores the old dropdown marker which can be clicked to
+open the dropdown menu of search suggestions or regularly visited
+sites since a previous patch disables autoopening of the dropdown
+---
+ .../components/urlbar/content/UrlbarInput.mjs | 26 +++++++++++++++++++
+ .../components/urlbar/content/UrlbarView.mjs  |  4 +++
+ browser/themes/shared/urlbar-searchbar.css    | 19 ++++++++++++++
+ 3 files changed, 49 insertions(+)
+
+diff --git a/browser/components/urlbar/content/UrlbarInput.mjs b/browser/components/urlbar/content/UrlbarInput.mjs
+index 261bbb7c3f57..ad7cdada5cfa 100644
+--- a/browser/components/urlbar/content/UrlbarInput.mjs
++++ b/browser/components/urlbar/content/UrlbarInput.mjs
+@@ -158,6 +158,10 @@ ${
+                       data-l10n-id="urlbar-placeholder"/>
+         </moz-input-box>
+         <html:moz-urlbar-slot name="revert-button" />
++        <html:img class="urlbar-icon urlbar-history-dropmarker"
++               role="button"
++               keyNav="false"
++               data-l10n-id="urlbar-history-dropmarker"/>
+         <html:img class="urlbar-icon urlbar-go-button"
+                role="button"
+                keyNav="false"
+@@ -341,6 +345,10 @@ ${
+       this.#populateSlots();
+     }
+ 
++    this.dropmarker = this.querySelector(".urlbar-history-dropmarker");
++    this.dropmarker.hidden = false;
++    this.dropmarker.addEventListener("mousedown", this);
++
+     this.panel = this.querySelector(".urlbarView");
+     this._inputContainer = this.querySelector(".urlbar-input-container");
+     this.inputField = /** @type {HTMLInputElement} */ (
+@@ -5437,6 +5445,24 @@ ${
+ 
+   _on_mousedown(event) {
+     switch (event.currentTarget) {
++      case this.dropmarker:
++
++        if (event.button != 0)
++        {
++          break;
++        }
++
++        if (this.view.isOpen)
++        {
++          this.view.close();
++        }
++        else
++        {
++          this.focus();
++          this.view.autoOpen({ event });
++        }
++
++        break;
+       case this: {
+         this._mousedownOnUrlbarDescendant = true;
+         if (
+diff --git a/browser/components/urlbar/content/UrlbarView.mjs b/browser/components/urlbar/content/UrlbarView.mjs
+index 8afb2bf4a757..84df8092e141 100644
+--- a/browser/components/urlbar/content/UrlbarView.mjs
++++ b/browser/components/urlbar/content/UrlbarView.mjs
+@@ -553,6 +553,8 @@ export class UrlbarView {
+     this.#openPanelInstance = null;
+     this.#previousTabToSearchEngine = null;
+ 
++    //this.input.dropmarker.setAttribute("open", false);
++
+     this.input.toggleAttribute("open", false);
+ 
+     // Search Tips can open the view without the Urlbar being focused. If the
+@@ -1085,6 +1087,8 @@ export class UrlbarView {
+ 
+     this.input.inputField.setAttribute("aria-expanded", "true");
+ 
++    //this.input.dropmarker.setAttribute("open", true);
++
+     this.input.toggleAttribute("suppress-focus-border", true);
+     this.input.toggleAttribute("open", true);
+ 
+diff --git a/browser/themes/shared/urlbar-searchbar.css b/browser/themes/shared/urlbar-searchbar.css
+index cc595de7e383..61c3631a1bc4 100644
+--- a/browser/themes/shared/urlbar-searchbar.css
++++ b/browser/themes/shared/urlbar-searchbar.css
+@@ -744,6 +744,7 @@ toolbar[inactive="true"] .urlbar,
+ }
+ 
+ #urlbar-revert-button-container,
++.urlbar-history-dropmarker,
+ .urlbar-page-action,
+ .urlbar-go-button,
+ .search-go-button {
+@@ -779,6 +780,10 @@ toolbar[inactive="true"] .urlbar,
+   }
+ }
+ 
++.urlbar-history-dropmarker {
++  content: url("chrome://global/skin/icons/arrow-down.svg");
++}
++
+ .urlbar-go-button {
+   content: url("chrome://browser/skin/forward.svg");
+   height: auto;
+@@ -972,6 +977,20 @@ toolbar[inactive="true"] .urlbar,
+   }
+ }
+ 
++/* Translate the dropmarker to give illusion of increasing width of the recommendation  */
++
++/*
++#urlbar[cfr-recommendation-state] .urlbar-history-dropmarker {
++  transition: transform ease-in-out var(--cfr-animation-duration);
++}
++#urlbar[cfr-recommendation-state="expanded"] .urlbar-history-dropmarker {
++  transform: translateX(calc(var(--cfr-label-width) * -1));
++}
++#urlbar[cfr-recommendation-state="expanded"] .urlbar-history-dropmarker:-moz-locale-dir(rtl) {
++  transform: translateX(calc(var(--cfr-label-width)));
++}
++*/
++
+ /* Shift the url-bar text fading to stop the recommendation overlapping */
+ #urlbar[cfr-recommendation-state] .urlbar-input {
+   /* A mask-image is usually only defined for the url bar when text overflows.
+-- 
+2.56.0
+

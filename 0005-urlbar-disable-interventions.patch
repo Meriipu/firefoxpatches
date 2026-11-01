@@ -1,0 +1,33 @@
+From 697a37353c13413e6cf0b70deab0229e833e4b70 Mon Sep 17 00:00:00 2001
+From: Meriipu <Meriipu@users.noreply.github.com>
+Date: Sun, 25 Oct 2026 17:18:39 +0100
+Subject: [PATCH 05/12] urlbar: disable interventions
+
+interventions are all kinds of stuff like injecting obnoxious and huge
+inline links to mozillas homepage in the dropdown suggestions if you
+type "firefox browser" in the urlbar in some circumstances instead of
+behaving like you typed any other search term
+
+who knows what other sponsored stuff or spam might be injected if this
+provider is left alone
+---
+ browser/components/urlbar/UrlbarProviderInterventions.sys.mjs | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/browser/components/urlbar/UrlbarProviderInterventions.sys.mjs b/browser/components/urlbar/UrlbarProviderInterventions.sys.mjs
+index dfdc81f530df..dfca1e7f7f8f 100644
+--- a/browser/components/urlbar/UrlbarProviderInterventions.sys.mjs
++++ b/browser/components/urlbar/UrlbarProviderInterventions.sys.mjs
+@@ -482,6 +482,9 @@ export class UrlbarProviderInterventions extends UrlbarProvider {
+    * @param {UrlbarQueryContext} queryContext The query context object
+    */
+   async isActive(queryContext) {
++    // Disable interventions without dealing with policies.json
++    console.log("[UrlbarProviderInterventions] Skipping intervention for search string" + queryContext.searchString);
++    return false;
+     if (
+       !queryContext.searchString ||
+       queryContext.searchString.length > UrlbarUtils.MAX_TEXT_LENGTH ||
+-- 
+2.56.0
+

@@ -1,0 +1,29 @@
+From b166656b2b1bf8939105a98a30c02aecf47dd25e Mon Sep 17 00:00:00 2001
+From: Meriipu <Meriipu@users.noreply.github.com>
+Date: Sun, 25 Oct 2026 15:13:26 +0100
+Subject: [PATCH 10/12] tabbar: respect configured tab-min-width
+
+tabs.js overwrites the user-configured value for tab-min-width with
+a massive value of 50px so that tabs cant have a width below 50 which
+causes the tablist to horizontally scroll with even modest number of
+tabs open idk what the thinking was here but I dont think there was any
+---
+ browser/components/tabbrowser/content/tabs.js | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/browser/components/tabbrowser/content/tabs.js b/browser/components/tabbrowser/content/tabs.js
+index 568f3a7cc705..460b52a3fed9 100644
+--- a/browser/components/tabbrowser/content/tabs.js
++++ b/browser/components/tabbrowser/content/tabs.js
+@@ -170,7 +170,7 @@
+         null,
+         (pref, prevValue, newValue) => this.#updateTabMinWidth(newValue),
+         newValue => {
+-          const LIMIT = 50;
++          const LIMIT = 1; // ?????????????????????????????????????????
+           return Math.max(newValue, LIMIT);
+         }
+       );
+-- 
+2.56.0
+

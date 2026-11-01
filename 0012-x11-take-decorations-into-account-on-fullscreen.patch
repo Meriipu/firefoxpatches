@@ -1,0 +1,40 @@
+From 12bcc564c68ea630808ef83e1f6c869cfbf428b8 Mon Sep 17 00:00:00 2001
+From: Meriipu <Meriipu@users.noreply.github.com>
+Date: Thu, 29 Oct 2026 20:23:29 +0100
+Subject: [PATCH 12/12] x11: take decorations into account on fullscreen
+
+fullscreening a decorated window causes strange offsets in the rendered
+page contents which makes mouse clicks get sent higher up than where
+the click was visually made
+---
+ widget/gtk/nsWindow.cpp | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/widget/gtk/nsWindow.cpp b/widget/gtk/nsWindow.cpp
+index 9d11df189598..921b1690f03b 100644
+--- a/widget/gtk/nsWindow.cpp
++++ b/widget/gtk/nsWindow.cpp
+@@ -1560,15 +1560,15 @@ auto nsWindow::Bounds::ComputeX11(const nsWindow* aWindow) -> Bounds {
+   LOG_WIN(aWindow, "  toplevelBoundsWithTitlebar %s",
+           ToString(toplevelBoundsWithTitlebar).c_str());
+ 
++  const auto toplevelBounds = GetBounds(toplevel);
++  LOG_WIN(aWindow, "  toplevelBounds %s", ToString(toplevelBounds).c_str());
++
+   if (aWindow->GetSizeMode() == nsSizeMode_Fullscreen) {
+     // In order to avoid spurious extra resizes during fullscreen transitions,
+-    // we assume we're not decorated.
+-    return {.mClientArea = toplevelBoundsWithTitlebar, .mClientMargin = {}};
++    // we assume the GTK client fills the toplevel window.
++    return {.mClientArea = toplevelBounds, .mClientMargin = {}};
+   }
+ 
+-  const auto toplevelBounds = GetBounds(toplevel);
+-  LOG_WIN(aWindow, "  toplevelBounds %s", ToString(toplevelBounds).c_str());
+-
+   // Offset from system decoration to gtk decoration.
+   const auto systemDecorationOffset = [&] {
+     auto offset =
+-- 
+2.56.0
+

@@ -1,0 +1,52 @@
+From f871fd0aeb1d5fa9a29f3272584b24d90fc285fe Mon Sep 17 00:00:00 2001
+From: Meriipu <Meriipu@users.noreply.github.com>
+Date: Sun, 25 Oct 2026 23:36:06 +0100
+Subject: [PATCH 11/12] contextmenu: hide annoying right-click contextmenu
+ entries
+
+this currently hides:
+
+sendlinktodevice
+sendpagetodevice
+sep-sendlinktodevice
+video-saveimage
+sendimage
+sendvideo
+sendaudio
+inspect-a11y
+sep-setbackground
+setDesktopBackground
+take-screenshot
+---
+ browser/themes/shared/browser-shared.css | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+diff --git a/browser/themes/shared/browser-shared.css b/browser/themes/shared/browser-shared.css
+index 10a6c0b12ac7..437d159ba3b6 100644
+--- a/browser/themes/shared/browser-shared.css
++++ b/browser/themes/shared/browser-shared.css
+@@ -35,6 +35,21 @@
+ @import url("chrome://browser/skin/UITour.css");
+ @import url("chrome://browser/skin/formautofill-notification.css");
+ 
++/* hide annoying contextmenu entries */
++#context-sendlinktodevice,
++#context-sendpagetodevice,
++#context-sep-sendlinktodevice,
++#context-video-saveimage,
++#context-sendimage,
++#context-sendvideo,
++#context-sendaudio,
++#context-inspect-a11y,
++#context-sep-setbackground,
++#context-setDesktopBackground,
++#context-take-screenshot {
++  display: none !important;
++}
++
+ .search-one-offs {
+   display: none !important;
+ }
+-- 
+2.56.0
+
